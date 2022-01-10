@@ -1,0 +1,78 @@
+html {
+  background-image: url("pozadie.png");
+  background-size: cover;
+  background-position: center;
+}
+.zadnyObrazok {
+  text-align: center;
+}
+.right {
+  background-color: white;
+  padding: 15px;
+  color: black;
+  /*text-align: center;*/
+  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.obr {
+  width:100%;
+  height: auto;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th {
+  width: 200px;
+  padding: 8px;
+  background-color: #202060;
+}
+td {
+  padding: 8px;
+  /*background-color: #ececf8;*/
+  color: black;
+}
+tr:nth-child(odd) {
+  background-color: #ececf8;
+}
+tr:nth-child(even) {
+  /*background-color: #b3b3cc;*/
+  background-color: white;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+p, li, ol, th, td {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.hlavne {
+  padding: 8px;
+  /*margin-bottom: 7px;*/
+  background-color: #330000;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  cursor: pointer;
+  text-decoration: none;
+}
+.opacne {
+  padding: 8px;
+  color: #4d0000;
+  background-color: #f2f2f2;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  cursor: pointer;
+  display: none;
+}
+.red {
+  color: #4d0000;
+}
+.hrube {
+  font-weight: bold;
+}
+.zlava {
+  text-align: left;
+  /*font-size: 18px;*/
+}
+.mensie {
+  width: 100px;
+}
