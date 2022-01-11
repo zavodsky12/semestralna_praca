@@ -22,6 +22,9 @@ class AuthController
         if (isset($_POST['registration'])) {
             $this->registration($_POST['registration']);
         }
+        if (isset($_POST['nazov'])) {
+            $this->pridanieproduktu($_POST['nazov']);
+        }
     }
 
     public function login($name)
@@ -83,5 +86,13 @@ class AuthController
         } else {
             Auth::badLoggin($name);
         }
+    }
+    public function pridanieproduktu($meno)
+    {
+        $name = date('Y-m-d-H-i-s_').$_FILES['file']['name'];
+        $path = "files/$name";
+        move_uploaded_file($_FILES['file']['tmp_name'], $path);
+        $this->con->prepare("INSERT INTO produkty(obrazok, nazov, cena, pocet_kusov, popis, typ, kategoria) VALUES (?,?,?,?,?,?,?)")
+            ->execute([$name, $meno, $_POST['cena'], $_POST['pocet_kusov'], $_POST['popis'], $_POST['typ'], $_POST['kategoria']]);
     }
 }

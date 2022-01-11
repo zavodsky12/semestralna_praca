@@ -66,10 +66,13 @@ $conn = mysqli_connect("localhost","root","","databaza2");
     <div class="col-6 col-s-8">
         <div class="main">
             <h1>Pridanie produktu</h1>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div class="container">
                     <p class="cierna">Prosím, vyplňte toto pole pre pridanie produktu do databázy</p>
                     <hr>
+
+                    <label for="file"><b class="cierna">Vložte obrázok</b></label>
+                    <input class="cierna registr" type="file" id="file" name="file">
 
                     <label for="nazov"><b class="cierna">Názov</b></label>
                     <input class="registr" type="text" placeholder="Názov" name="nazov" id="nazov" required>
