@@ -19,20 +19,25 @@ class AuthController
         if (isset($_POST['logout'])) {
             $this->logout();
         }
+        if (isset($_POST['registration'])) {
+            $this->registration($_POST['registration']);
+        }
     }
 
     public function login($name)
     {
         $dlzka = strlen($name);
         $passwd = $_POST['password'];
-        if ($dlzka > 2 && $dlzka < 255) {
+        $dlzka2 = strlen($passwd);
+        if ($dlzka > 2 && $dlzka < 255 && $dlzka2 > 2 && $dlzka2 < 255) {
             $stmt = $this->con->prepare("SELECT meno FROM prihlasenia WHERE meno = '$name'");
             $stmt->execute();
             $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
             if (empty($posts)) {
-                $this->con->prepare("INSERT INTO prihlasenia(meno, heslo) VALUES (?,?)")
-                    ->execute([$name,$passwd]);
-                Auth::login($name);
+                //$this->con->prepare("INSERT INTO prihlasenia(meno, heslo) VALUES (?,?)")
+                //    ->execute([$name,$passwd]);
+                //Auth::login($name);
+                Auth::badLoggin($name);
             } else {
                 $stmt = $this->con->prepare("SELECT heslo FROM prihlasenia WHERE meno = '$name'");
                 $stmt->execute();
@@ -53,5 +58,30 @@ class AuthController
     {
         Auth::logout();
         unset($_POST['logout']);
+    }
+    public function registration($name)
+    {
+        $dlzka = strlen($name);
+        $passwd = $_POST['password'];
+        $dlzka2 = strlen($passwd);
+        if ($dlzka > 2 && $dlzka < 255 && $dlzka2 > 2 && $dlzka2 < 255) {
+            $stmt = $this->con->prepare("SELECT meno FROM prihlasenia WHERE meno = '$name'");
+            $stmt->execute();
+            $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
+            if (empty($posts)) {
+                if ($_POST['password'] == $_POST['psw-repeat']) {
+                    $this->con->prepare("INSERT INTO prihlasenia(meno, heslo) VALUES (?,?)")
+                        ->execute([$name, $passwd]);
+                    Auth::login($name);
+                    //Auth::badLoggin($name);
+                } else {
+                    Auth::badLoggin3($name);
+                }
+            } else {
+                Auth::badLoggin2($name);
+            }
+        } else {
+            Auth::badLoggin($name);
+        }
     }
 }

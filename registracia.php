@@ -1,10 +1,7 @@
 <?php
 session_start();
 require "AuthController.php";
-//require "App.php";
 $authctr = new AuthController();
-//$app = new App();
-//$conn = mysqli_connect("localhost","root","dtb456","databaza");
 $conn = mysqli_connect("localhost","root","","databaza2");
 ?>
 
@@ -58,7 +55,7 @@ $conn = mysqli_connect("localhost","root","","databaza2");
         </ul>
         <?php if (isset($_SESSION['name'])) { ?>
             <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                    <br>
+                <br>
                 <ul>
                     <li class="hlavne"><a href="pridaj.php">Pridaj produkt</a></li>
                 </ul>
@@ -68,53 +65,49 @@ $conn = mysqli_connect("localhost","root","","databaza2");
 
     <div class="col-6 col-s-8">
         <div class="main">
-            <h1>Najnovšie produkty</h1>
-            <p>Hry XXXII. olympijády sa uskutočnili v roku 2021 v Tokiu, v hlavnom meste Japonska. Uskutočnili sa o rok neskôr ako sa plánovalo kvôli pandémii koronavírusu. Hrozilo aj ich úplné zrušenie, čo by sa stalo prvý raz od druhej svetovej vojny. Zároveň sa prvý raz neuskutočnili v plánovanom čase. Hry boli jedny z najstratovejších v histórií, preto je šťastím, že ich organizovalo práve Japonsko, jedna z najsilnejších ekonomík sveta, ktorá presun o rok dokázala zvládnuť.</p>
-            <?php
-            $pocet = 0;
-            $sql = "SELECT MIN(id_produktu) as total FROM produkty";
-            $stmt = $conn->query($sql);
-            $string = $stmt->fetch_assoc();
-            $min = (int)$string['total'];
-            $sql = "SELECT MAX(id_produktu) as total FROM produkty";
-            $stmt = $conn->query($sql);
-            $string = $stmt->fetch_assoc();
-            $max = (int)$string['total'];
-            for ($i = $min; $i < $max+1; $i++) {
-                $sql = "SELECT * FROM produkty WHERE id_produktu = '$i'";
-                $stmt = $conn->query($sql);
-                $string = $stmt->fetch_assoc();
-                if (!is_null($string)) {
-                    $pocet++;
-                    ?>
-                    <div class="w3-col">
-                        <div class="w3-card-4 w3-margin w3-white">
-                            <?php $obraz = $string['obrazok']; ?>
-                            <img src="files/<?=$obraz?>" alt="Nature" class="produkt-obr">
-                            <div class="w3-container">
-                                <?php $meno = $string['nazov']; ?>
-                                <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
-                            </div>
+            <h1>Registrácia</h1>
+            <form method="post">
+                <div class="container">
+                    <p class="cierna">Prosím, vyplňte toto pole pre registráciu</p>
+                    <hr>
 
-                            <div class="w3-container">
-                                <?php $pocetK = $string['pocet_kusov']; ?>
-                                <h4>Pocet kusov na sklade: <span class="w3-opacity"><?=$pocetK?></span></h4>
-                                <?php $cena = $string['cena']; ?>
-                                <h4>Cena: <span class="w3-opacity"><?=$cena?></span></h4>
-                                <p><button><b>Vlozit do kosika</b></button></p>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-                <?php if ($pocet == 3) {
-                    $pocet = 0;
-                } ?>
-            <?php } ?>
-            <?php while ($pocet < 3) { ?>
-            <div class="w3-col" style="height: 550px">
-            </div>
-            <?php $pocet++; ?>
-            <?php } ?>
+                    <label for="email"><b class="cierna">Email</b></label>
+                    <input class="registr" type="email" placeholder="Email" name="registration" id="email" required>
+
+                    <label for="psw"><b class="cierna">Heslo</b></label>
+                    <input class="registr" type="password" placeholder="Heslo" name="password" id="psw" required>
+
+                    <label for="psw-repeat"><b class="cierna">Zopakujte heslo</b></label>
+                    <input class="registr" type="password" placeholder="Zopakujte heslo" name="psw-repeat" id="psw-repeat" required>
+                    <hr>
+                    <p class="cierna">Vytvorením účtu súhlasíte s našími podmienkami používania <a class="modre" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Terms & Privacy</a>.</p>
+
+                    <?php if(Auth::isLogged()) { ?>
+                        <br>
+                        <p class="red">Už ste prihlásený</p>
+                    <?php } else {?>
+                        <button type="submit">Registrovať</button>
+                    <?php }?>
+                </div>
+                <?php if(Auth::isBadLoggin()) { ?>
+                    <p class="cervena">Nepodarilo sa prihlásiť</p>
+                    <?php unset($_SESSION['bad']); ?>
+                <?php }?>
+                <?php if(Auth::isBadLoggin2()) { ?>
+                    <p class="cervena">Nepodarilo sa prihlásiť už u nás máte účet</p>
+                    <?php unset($_SESSION['bad2']); ?>
+                <?php }?>
+                <?php if(Auth::isBadLoggin3()) { ?>
+                    <p class="cervena">Nepodarilo sa prihlásiť zadali ste zlé údaje</p>
+                    <?php unset($_SESSION['bad3']); ?>
+                <?php }?>
+
+                <?php if(!Auth::isLogged()) { ?>
+                <div class="container">
+                    <p class="cierna">Už u nás máte účet? <a href="#" class="modre">Prihláste sa</a>.</p>
+                </div>
+                <?php }?>
+            </form>
 
             <hr>
 
@@ -132,10 +125,6 @@ $conn = mysqli_connect("localhost","root","","databaza2");
         <?php } else { ?>
             <div class="login">
                 <h2>Login</h2>
-                <?php if(Auth::isBadLoggin()) { ?>
-                    <p class="cervena">Zadali ste zly login</p>
-                    <?php unset($_SESSION['bad']); ?>
-                <?php } ?>
                 <form method="post">
                     <label for="controle" class="cierna">Email:</label>
                     <input type="email" name="login">
@@ -145,20 +134,12 @@ $conn = mysqli_connect("localhost","root","","databaza2");
                 </form>
             </div>
         <?php } ?>
-        <br>
-        <div class="registracia">
-            <h2>Registrácia</h2>
-            <div class="right">
-                <p class="normalne">Ak ešte u nás nemáte konto, zaregistrujte sa</p>
-                <button><b><a href="registracia.php">Registrovať</a></b></button>
-            </div>
-        </div>
-<!--        <br>-->
-<!--        <div class="right">-->
-<!--            <img src="pravy.png" class="obr">-->
-<!--            <h2>Japonsko</h2>-->
-<!--            <p>Japonsko (jap. 日本 – Nippon alebo Nihon; formálne: jap. 日本国 – Nippon-koku alebo Nihon-koku) je štát ležiaci na východnom okraji ázijského kontinentu, na východ od Číny a Kórey. Rozkladá sa od Ochotského mora na severe, po Východočínske more na juhovýchode. Zo západu ho obklopuje Japonské more a z východu a juhu Tichý oceán.</p>-->
-<!--        </div>-->
+        <!--        <br>-->
+        <!--        <div class="right">-->
+        <!--            <img src="pravy.png" class="obr">-->
+        <!--            <h2>Japonsko</h2>-->
+        <!--            <p>Japonsko (jap. 日本 – Nippon alebo Nihon; formálne: jap. 日本国 – Nippon-koku alebo Nihon-koku) je štát ležiaci na východnom okraji ázijského kontinentu, na východ od Číny a Kórey. Rozkladá sa od Ochotského mora na severe, po Východočínske more na juhovýchode. Zo západu ho obklopuje Japonské more a z východu a juhu Tichý oceán.</p>-->
+        <!--        </div>-->
     </div>
     <div class="col-1 col-s-0">
 
