@@ -26,11 +26,13 @@ th {
   width: 200px;
   padding: 8px;
   background-color: #202060;
+  text-align: left;
 }
 td {
   padding: 8px;
   /*background-color: #ececf8;*/
   color: black;
+  width: 300px;
 }
 tr:nth-child(odd) {
   background-color: #ececf8;

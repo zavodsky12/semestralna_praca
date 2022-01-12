@@ -3,13 +3,6 @@ session_start();
 require "AuthController.php";
 $authctr = new AuthController();
 $conn = mysqli_connect("localhost","root","","databaza2");
-if(!isset($_SESSION['name'])){
-    header("Location:index.php");
-} else {
-    if ($_SESSION['name'] != 'admin@admin') {
-        header("Location:index.php");
-    }
-}
 ?>
 
 
@@ -70,50 +63,80 @@ if(!isset($_SESSION['name'])){
         <?php } ?>
     </div>
 
+    <?php
+    $id = $_SESSION['hodnota'];
+    $sql = "SELECT * FROM produkty WHERE id_produktu = '$id'";
+    $stmt = $conn->query($sql);
+    $string = $stmt->fetch_assoc();
+    ?>
     <div class="col-6 col-s-8">
         <div class="main">
-            <h1>Pridanie produktu</h1>
-            <form method="post" enctype="multipart/form-data">
+            <br>
                 <div class="container">
-                    <p class="cierna">Prosím, vyplňte toto pole pre pridanie produktu do databázy</p>
+                    <h2 class="cierna"><?=$string['nazov']?></h2>
                     <hr>
 
-                    <label for="file"><b class="cierna">Vložte obrázok</b></label>
-                    <input class="cierna registr" type="file" id="file" name="file" required>
+                    <table>
+                        <tr>
+                            <th colspan="2"><img src="files/<?=$string['obrazok']?>" alt="Nature" class="pridanieObr"></th>
+                        </tr>
+                        <tr>
+                            <th>Názov</th>
+                            <td><?=$string['nazov']?></td>
+                        </tr>
+                        <tr>
+                            <th>Cena</th>
+                            <td><?=$string['cena']?> €</td>
+                        </tr>
+                        <tr>
+                            <th>Počet kusov</th>
+                            <td><?=$string['pocet_kusov']?></td>
+                        </tr>
+                    </table>
 
-                    <label for="nazov"><b class="cierna">Názov</b></label>
-                    <input class="registr" type="text" placeholder="Názov" name="nazov" id="nazov" required>
+                    <h2 class="cierna">Popis</h2>
+                    <p class="cierna"><?=$string['popis']?></p>
 
-                    <label for="cena"><b class="cierna">Cena</b></label>
-                    <input class="registr" type="number" placeholder="Cena" name="cena" id="cena" required>
-
-                    <label for="pocet_kusov"><b class="cierna">Počet kusov</b></label>
-                    <input class="registr" type="number" placeholder="Počet kusov" name="pocet_kusov" id="pocet_kusov" required>
-
-                    <label for="popis"><b class="cierna">Popis</b></label>
-                    <input class="registr" type="text" placeholder="Popis" name="popis" id="popis" required>
-
-                    <label for="typ"><b class="cierna">Typ</b></label>
-                    <select class="registr" id="typ" name="typ">
-                        <option value="L">L</option>
-                        <option value="Z">Z</option>
-                    </select>
-
-                    <label for="kategoria"><b class="cierna">Kategória</b></label>
-                    <input class="registr" type="number" placeholder="Kategória" name="kategoria" id="kategoria" min="1" max="5" required>
-                    <br>
-
-                    <button type="submit">Pridať produkt</button>
+                    <button type="submit">Vložiť do košíka</button>
                 </div>
-            </form>
 
             <hr>
 
         </div>
     </div>
 
-    <div class="col-22 col-s-4">
-
+    <div class="col-22 col-s-4 aside">
+        <?php if(Auth::isLogged()) { ?>
+            <div class="login">
+                <h2>Ste prihlaseny ako <?=$_SESSION['username']?></h2>
+                <form method="post">
+                    <input type="submit" name="logout" value="Odhlasit">
+                </form>
+            </div>
+        <?php } else { ?>
+            <div class="login">
+                <h2>Login</h2>
+                <?php if(Auth::isBadLoggin()) { ?>
+                    <p class="cervena">Zadali ste zly login</p>
+                    <?php unset($_SESSION['bad']); ?>
+                <?php } ?>
+                <form method="post">
+                    <label for="controle" class="cierna">Email:</label>
+                    <input type="email" name="login">
+                    <label for="controle" class="cierna">Heslo:</label>
+                    <input type="password" name="password">
+                    <input type="submit" value="Prihlasit">
+                </form>
+            </div>
+        <?php } ?>
+        <br>
+        <div class="registracia">
+            <h2>Registrácia</h2>
+            <div class="right">
+                <p class="normalne">Ak ešte u nás nemáte konto, zaregistrujte sa</p>
+                <button><b><a href="registracia.php">Registrovať</a></b></button>
+            </div>
+        </div>
     </div>
     <div class="col-1 col-s-0">
 

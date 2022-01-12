@@ -2,11 +2,13 @@
 
 class Auth
 {
-    public static function login($name) {
+    public static function login($name, $user) {
         $_SESSION['name'] = $name;
+        $_SESSION['username'] = $user;
     }
     public static function logout() {
         unset($_SESSION['name']);
+        unset($_SESSION['username']);
     }
     public static function isLogged() {
         return isset($_SESSION['name']);

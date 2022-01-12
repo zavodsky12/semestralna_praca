@@ -146,3 +146,19 @@ button {
     border: none;
     background: #f1f1f1;
 }
+.uprtr {
+    width: 80%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+.zadnyForm {
+    background-color: #bfbfbf;
+    padding: 0px;
+}
+.pridanieObr {
+    width: 500px;
+    height: auto;
+}

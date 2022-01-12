@@ -1,23 +1,11 @@
 <?php
 session_start();
-require "AuthController.php";
+require "../AuthController.php";
 //require "App.php";
 $authctr = new AuthController();
 //$app = new App();
 //$conn = mysqli_connect("localhost","root","dtb456","databaza");
 $conn = mysqli_connect("localhost","root","","databaza2");
-if(isset($_POST['idcko']))
-{
-    $id=$_POST['idcko'];
-    $_SESSION['idcko']=$id;
-    header("location:uprava.php");
-}
-if(isset($_POST['hodnota']))
-{
-    $id=$_POST['hodnota'];
-    $_SESSION['hodnota']=$id;
-    header("location:produkt.php");
-}
 ?>
 
 
@@ -26,11 +14,11 @@ if(isset($_POST['hodnota']))
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="vlastne.css">
-    <link rel="stylesheet" href="nove.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../vlastne.css">
+    <link rel="stylesheet" href="../nove.css">
     <title>Obchod so športovými potrebami</title>
-    <script src="javaskripty.js"></script>
+    <script src="../javaskripty.js"></script>
 </head>
 
 <body>
@@ -45,20 +33,20 @@ if(isset($_POST['hodnota']))
     </div>
     <div class="col-2 col-s-12 menu">
         <ul>
-            <li class="hlavne"><a href="index.php">Hlavná stránka</a></li>
+            <li class="hlavne"><a href="../index.php">Hlavná stránka</a></li>
             <li class="hlavne" onclick=dropdownSide("prve")>Letný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne prve"><a href="Letne/Bicykle.php" class="red">Bicykle</a></li>
-            <li class="opacne prve"><a href="Letne/Kolobezky.html" class="red">Kolobežky</a></li>
-            <li class="opacne prve"><a href="Letne/Korcule.html" class="red">Korčule</a></li>
-            <li class="opacne prve"><a href="Letne/Doplnky.html" class="red">Príslušenstvo</a></li>
-            <li class="opacne prve"><a href="Letne/Nahradne.html" class="red">Doplnky</a></li>
+            <li class="opacne prve"><a href="Bicykle.php" class="red">Bicykle</a></li>
+            <li class="opacne prve"><a href="Kolobezky.html" class="red">Kolobežky</a></li>
+            <li class="opacne prve"><a href="Korcule.html" class="red">Korčule</a></li>
+            <li class="opacne prve"><a href="Nahradne.html" class="red">Doplnky</a></li>
+            <li class="opacne prve"><a href="Doplnky.html" class="red">Príslušenstvo</a></li>
             <li class="hlavne" onclick=dropdownSide("druhe")>Zimný šport<i class="fa fa-caret-down"></i></li>
             <li class="opacne druhe">Lyže</li>
             <li class="opacne druhe">Snowboardy</li>
             <li class="opacne druhe">Korčule</li>
             <li class="opacne druhe">Bežky</li>
-            <li class="opacne druhe">Príslušenstvo</li>
             <li class="opacne druhe">Doplnky</li>
+            <li class="opacne druhe">Príslušenstvo</li>
             <li class="hlavne" onclick=dropdownSide("tretie")>Doplnky<i class="fa fa-caret-down"></i></li>
             <li class="opacne tretie">Cyklodoplnky</li>
             <li class="opacne tretie">Cyklovýbava</li>
@@ -70,9 +58,9 @@ if(isset($_POST['hodnota']))
         </ul>
         <?php if (isset($_SESSION['name'])) { ?>
             <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                    <br>
+                <br>
                 <ul>
-                    <li class="hlavne"><a href="pridaj.php">Pridaj produkt</a></li>
+                    <li class="hlavne"><a href="../pridaj.php">Pridaj produkt</a></li>
                 </ul>
             <?php } ?>
         <?php } ?>
@@ -81,7 +69,7 @@ if(isset($_POST['hodnota']))
     <div class="col-6 col-s-8">
         <div class="main">
             <h1>Najnovšie produkty</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <p>Hry XXXII. olympijády sa uskutočnili v roku 2021 v Tokiu, v hlavnom meste Japonska. Uskutočnili sa o rok neskôr ako sa plánovalo kvôli pandémii koronavírusu. Hrozilo aj ich úplné zrušenie, čo by sa stalo prvý raz od druhej svetovej vojny. Zároveň sa prvý raz neuskutočnili v plánovanom čase. Hry boli jedny z najstratovejších v histórií, preto je šťastím, že ich organizovalo práve Japonsko, jedna z najsilnejších ekonomík sveta, ktorá presun o rok dokázala zvládnuť.</p>
             <?php
             $pocet = 0;
             $sql = "SELECT MIN(id_produktu) as total FROM produkty";
@@ -97,44 +85,39 @@ if(isset($_POST['hodnota']))
                 $stmt = $conn->query($sql);
                 $string = $stmt->fetch_assoc();
                 if (!is_null($string)) {
+                    if ($string['typ'] == 'L') {
                     $pocet++;
                     ?>
-<!--                    <a href="produkt.php">-->
-                        <div class="w3-col">
+                    <div class="w3-col">
                         <div class="w3-card-4 w3-margin w3-white">
                             <?php $obraz = $string['obrazok']; ?>
-                            <img src="files/<?=$obraz?>" alt="Nature" class="produkt-obr">
+                            <img src="../files/<?=$obraz?>" alt="Nature" class="produkt-obr">
                             <div class="w3-container">
                                 <?php $meno = $string['nazov']; ?>
                                 <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
                                 <?php $pocetK = $string['pocet_kusov']; ?>
                                 <h4>Pocet kusov na sklade: <span class="w3-opacity"><?=$pocetK?></span></h4>
                                 <?php $cena = $string['cena']; ?>
-                                <h4>Cena: <span class="w3-opacity"><?=$cena?> €</span></h4>
-                                <form method='post' class="zadnyForm">
-                                    <p><button name="hodnota" value='<?=$i?>'><b>Pozrieť produkt</b></button></p>
-                                </form>
+                                <h4>Cena: <span class="w3-opacity"><?=$cena?></span></h4>
                                 <p><button><b>Vložiť do košíka</b></button></p>
                                 <?php if (isset($_SESSION['name'])) { ?>
                                     <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                                        <form method='post' class="zadnyForm">
-                                            <p><button class="cervena" name="idcko" value='<?=$i?>'><b>Upraviť produkt</b></button></p>
-                                        </form>
+                                        <p><button class="cervena" name="idcko"><a href="../uprava.php"><b>Upraviť produkt</b></a></button></p>
                                     <?php } ?>
                                 <?php } ?>
                             </div>
                         </div>
-                        </div>
-<!--                    </a>-->
+                    </div>
+                    <?php } ?>
                 <?php } ?>
                 <?php if ($pocet == 3) {
                     $pocet = 0;
                 } ?>
             <?php } ?>
             <?php while ($pocet < 3) { ?>
-            <div class="w3-col" style="height: 570px">
-            </div>
-            <?php $pocet++; ?>
+                <div class="w3-col" style="height: 570px">
+                </div>
+                <?php $pocet++; ?>
             <?php } ?>
 
             <hr>
@@ -145,7 +128,7 @@ if(isset($_POST['hodnota']))
     <div class="col-22 col-s-4 aside">
         <?php if(Auth::isLogged()) { ?>
             <div class="login">
-                <h2>Ste prihlaseny ako <?=$_SESSION['username']?></h2>
+                <h2>Ste prihlaseny</h2>
                 <form method="post">
                     <input type="submit" name="logout" value="Odhlasit">
                 </form>
@@ -171,15 +154,15 @@ if(isset($_POST['hodnota']))
             <h2>Registrácia</h2>
             <div class="right">
                 <p class="normalne">Ak ešte u nás nemáte konto, zaregistrujte sa</p>
-                <button><b><a href="registracia.php">Registrovať</a></b></button>
+                <button><b><a href="../registracia.php">Registrovať</a></b></button>
             </div>
         </div>
-<!--        <br>-->
-<!--        <div class="right">-->
-<!--            <img src="pravy.png" class="obr">-->
-<!--            <h2>Japonsko</h2>-->
-<!--            <p>Japonsko (jap. 日本 – Nippon alebo Nihon; formálne: jap. 日本国 – Nippon-koku alebo Nihon-koku) je štát ležiaci na východnom okraji ázijského kontinentu, na východ od Číny a Kórey. Rozkladá sa od Ochotského mora na severe, po Východočínske more na juhovýchode. Zo západu ho obklopuje Japonské more a z východu a juhu Tichý oceán.</p>-->
-<!--        </div>-->
+        <!--        <br>-->
+        <!--        <div class="right">-->
+        <!--            <img src="pravy.png" class="obr">-->
+        <!--            <h2>Japonsko</h2>-->
+        <!--            <p>Japonsko (jap. 日本 – Nippon alebo Nihon; formálne: jap. 日本国 – Nippon-koku alebo Nihon-koku) je štát ležiaci na východnom okraji ázijského kontinentu, na východ od Číny a Kórey. Rozkladá sa od Ochotského mora na severe, po Východočínske more na juhovýchode. Zo západu ho obklopuje Japonské more a z východu a juhu Tichý oceán.</p>-->
+        <!--        </div>-->
     </div>
     <div class="col-1 col-s-0">
 

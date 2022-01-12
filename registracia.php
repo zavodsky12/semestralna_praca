@@ -74,6 +74,9 @@ $conn = mysqli_connect("localhost","root","","databaza2");
                     <label for="email"><b class="cierna">Email</b></label>
                     <input class="registr" type="email" placeholder="Email" name="registration" id="email" required>
 
+                    <label for="username"><b class="cierna">Meno</b></label>
+                    <input class="registr" type="text" placeholder="Email" name="username" id="username" required>
+
                     <label for="psw"><b class="cierna">Heslo</b></label>
                     <input class="registr" type="password" placeholder="Heslo" name="password" id="psw" required>
 

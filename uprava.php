@@ -72,40 +72,67 @@ if(!isset($_SESSION['name'])){
 
     <div class="col-6 col-s-8">
         <div class="main">
-            <h1>Pridanie produktu</h1>
-            <form method="post" enctype="multipart/form-data">
+            <h1>Úprava produktu</h1>
                 <div class="container">
-                    <p class="cierna">Prosím, vyplňte toto pole pre pridanie produktu do databázy</p>
+                    <?php
+                    $id = $_SESSION['idcko'];
+                    $sql = "SELECT * FROM produkty WHERE id_produktu = '$id'";
+                    $stmt = $conn->query($sql);
+                    $string = $stmt->fetch_assoc();
+                    ?>
+                    <p class="cierna">Tu môžete upravovať svoj produkt</p>
                     <hr>
 
-                    <label for="file"><b class="cierna">Vložte obrázok</b></label>
-                    <input class="cierna registr" type="file" id="file" name="file" required>
+                    <img src="files/<?=$string['obrazok']?>" alt="Nature" class="pridanieObr"><br><br>
 
-                    <label for="nazov"><b class="cierna">Názov</b></label>
-                    <input class="registr" type="text" placeholder="Názov" name="nazov" id="nazov" required>
+                    <h2 class="cierna">Popis</h2>
+                    <p class="cierna"><?=$string['popis']?></p>
 
-                    <label for="cena"><b class="cierna">Cena</b></label>
-                    <input class="registr" type="number" placeholder="Cena" name="cena" id="cena" required>
+<!--                    <form method="post" enctype="multipart/form-data">-->
+<!--                        <label for="uprObr"><b class="cierna">Obrázok:</b></label>-->
+<!--                        <input class="uprtr cierna" type="file" id="uprObr" name="uprObr">-->
+<!--                        <button type="submit">Zmeniť</button>-->
+<!--                    </form>-->
 
-                    <label for="pocet_kusov"><b class="cierna">Počet kusov</b></label>
-                    <input class="registr" type="number" placeholder="Počet kusov" name="pocet_kusov" id="pocet_kusov" required>
+                    <form method="post">
+                        <p><label for="uprNazov"><b class="cierna">Názov: <?=$string['nazov']?></b></label></p>
+                        <input class="uprtr" type="text" placeholder="Názov" name="uprNazov" id="uprNazov">
+                        <button type="submit">Zmeniť</button>
+                    </form>
 
-                    <label for="popis"><b class="cierna">Popis</b></label>
-                    <input class="registr" type="text" placeholder="Popis" name="popis" id="popis" required>
+                    <form method="post">
+                        <p><label for="uprCena"><b class="cierna">Cena: <?=$string['cena']?> €</b></label></p>
+                        <input class="uprtr" type="number" placeholder="Cena" name="uprCena" id="uprCena">
+                        <button type="submit">Zmeniť</button>
+                    </form>
 
-                    <label for="typ"><b class="cierna">Typ</b></label>
-                    <select class="registr" id="typ" name="typ">
-                        <option value="L">L</option>
-                        <option value="Z">Z</option>
-                    </select>
+                    <form method="post">
+                        <p><label for="uprPocet"><b class="cierna">Počet kusov: <?=$string['pocet_kusov']?></b></label></p>
+                        <input class="uprtr" type="number" placeholder="Počet kusov" name="uprPocet" id="uprPocet">
+                        <button type="submit">Zmeniť</button>
+                    </form>
 
-                    <label for="kategoria"><b class="cierna">Kategória</b></label>
-                    <input class="registr" type="number" placeholder="Kategória" name="kategoria" id="kategoria" min="1" max="5" required>
-                    <br>
+                    <form method="post">
+                        <p><label for="uprPopis"><b class="cierna">Popis:</b></label></p>
+                        <input class="uprtr" type="text" placeholder="Popis" name="uprPopis" id="uprPopis">
+                        <button type="submit">Zmeniť</button>
+                    </form>
 
-                    <button type="submit">Pridať produkt</button>
+                    <form method="post">
+                        <p><label for="uprTyp"><b class="cierna">Typ: <?=$string['typ']?></b></label></p>
+                        <select class="uprtr" id="uprTyp" name="uprTyp">
+                            <option value="L">L</option>
+                            <option value="Z">Z</option>
+                        </select>
+                        <button type="submit">Zmeniť</button>
+                    </form>
+
+                    <form method="post">
+                        <p><label for="uprKategoria"><b class="cierna">Kategória: <?=$string['kategoria']?></b></label></p>
+                        <input class="uprtr" type="number" placeholder="Kategória" name="uprKategoria" id="uprKategoria" min="1" max="5">
+                        <button type="submit">Zmeniť</button>
+                    </form>
                 </div>
-            </form>
 
             <hr>
 
