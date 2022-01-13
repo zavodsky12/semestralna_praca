@@ -64,8 +64,10 @@ $conn = mysqli_connect("localhost","root","","databaza2");
     </div>
 
     <?php
-    $id = $_SESSION['hodnota'];
-    $sql = "SELECT * FROM produkty WHERE id_produktu = '$id'";
+    $url = $_SERVER['REQUEST_URI'];
+    $array = explode('=', $url);
+    $end = end($array);
+    $sql = "SELECT * FROM produkty WHERE id_produktu = '$end'";
     $stmt = $conn->query($sql);
     $string = $stmt->fetch_assoc();
     ?>
@@ -97,7 +99,17 @@ $conn = mysqli_connect("localhost","root","","databaza2");
                     <h2 class="cierna">Popis</h2>
                     <p class="cierna"><?=$string['popis']?></p>
 
-                    <button type="submit">Vložiť do košíka</button>
+                    <?php if(Auth::isLogged()) { ?>
+                        <form method="post">
+                            <label for="vlozDoK"><b class="cierna">Napíšte, koľko výrobkov chcete vložiť do košíka</b></label>
+                            <input class="registr" type="number" placeholder="Vložte počet kusov" name="vlozDoK" id="vlozDoK" min="1" max="<?=$string['pocet_kusov']?>" value="1" required>
+                            <input class="registr" type="number" placeholder="Vložte počet kusov" name="end" value="<?=$end?>" style="display: none" required>
+                            <button type="submit">Vložiť do košíka</button>
+                        </form>
+                    <?php } else { ?>
+                        <p class="red">Pre objednanie produktu sa musíte prihlásiť</p>
+                        <p class="red">Ak u nás ešte namáte konto <a href="registracia.php" class="modre">zaregistrujte sa</a></p>
+                    <?php } ?>
                 </div>
 
             <hr>
@@ -130,13 +142,43 @@ $conn = mysqli_connect("localhost","root","","databaza2");
             </div>
         <?php } ?>
         <br>
-        <div class="registracia">
-            <h2>Registrácia</h2>
-            <div class="right">
-                <p class="normalne">Ak ešte u nás nemáte konto, zaregistrujte sa</p>
-                <button><b><a href="registracia.php">Registrovať</a></b></button>
+        <?php if(Auth::isLogged()) { ?>
+            <div class="kosik">
+                <h2>Váš košík</h2>
+                <?php
+                $sql = "SELECT MIN(id_nakupu) as total FROM nakup";
+                $stmt = $conn->query($sql);
+                $string = $stmt->fetch_assoc();
+                $min = (int)$string['total'];
+                $sql = "SELECT MAX(id_nakupu) as total FROM nakup";
+                $stmt = $conn->query($sql);
+                $string = $stmt->fetch_assoc();
+                $max = (int)$string['total'];
+                $userN = $_SESSION['name'];
+                for ($i = $min; $i < $max+1; $i++) {
+                    $sql = "SELECT nakup.pocet_kusov as pocet_kusov, nazov, cena FROM nakup JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
+                    $stmt = $conn->query($sql);
+                    $string = $stmt->fetch_assoc();
+                    if (!is_null($string)) { ?>
+                        <div class="right">
+                            <p class="cierna"><b>Názov:</b> <?=$string['nazov']?></p>
+                            <p class="cierna"><b>Počet kosov:</b> <?=$string['pocet_kusov']?></p>
+                            <p class="cierna"><b>Celková cena:</b> <?=$string['cena'] * $string['pocet_kusov']?> €</p>
+                        </div>
+                        <br>
+                    <?php } ?>
+                <?php } ?>
+                <button><b><a href="kosik.php">Pozrieť košík</a></b></button>
             </div>
-        </div>
+        <?php } else { ?>
+            <div class="registracia">
+                <h2>Registrácia</h2>
+                <div class="right">
+                    <p class="normalne">Ak ešte u nás nemáte konto, zaregistrujte sa</p>
+                    <button><b><a href="registracia.php">Registrovať</a></b></button>
+                </div>
+            </div>
+        <?php } ?>
     </div>
     <div class="col-1 col-s-0">
 

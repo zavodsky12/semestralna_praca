@@ -46,6 +46,9 @@ class AuthController
         if (isset($_POST['uprKategoria'])) {
             $this->upravaKategoria($_POST['uprKategoria']);
         }
+        if (isset($_POST['vlozDoK'])) {
+            $this->vlozDoKosika($_POST['vlozDoK']);
+        }
     }
 
     public function login($name)
@@ -164,5 +167,15 @@ class AuthController
         $i = $_SESSION['idcko'];
         $sql = "UPDATE produkty SET kategoria = '$kategoria' WHERE id_produktu = '$i'";
         $this->con->query($sql);
+    }
+    public function vlozDoKosika($pocet)
+    {
+        $i = $_SESSION['name'];
+        $e = $_POST['end'];
+        $stmt = $this->con->prepare("SELECT id_pouzivatela FROM pouzivatelia WHERE email = '$i'");
+        $stmt->execute();
+        $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
+        $this->con->prepare("INSERT INTO nakup(id_pouzivatela, id_produktu, pocet_kusov) VALUES (?,?,?)")
+            ->execute([$posts[0], $e, $pocet]);
     }
 }

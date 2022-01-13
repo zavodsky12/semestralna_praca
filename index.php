@@ -12,12 +12,6 @@ if(isset($_POST['idcko']))
     $_SESSION['idcko']=$id;
     header("location:uprava.php");
 }
-if(isset($_POST['hodnota']))
-{
-    $id=$_POST['hodnota'];
-    $_SESSION['hodnota']=$id;
-    header("location:produkt.php");
-}
 ?>
 
 
@@ -29,7 +23,7 @@ if(isset($_POST['hodnota']))
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="vlastne.css">
     <link rel="stylesheet" href="nove.css">
-    <title>Obchod so športovými potrebami</title>
+    <title>Obchod so športovými potrebami bikeski.sk | Najnovšie produkty</title>
     <script src="javaskripty.js"></script>
 </head>
 
@@ -100,6 +94,7 @@ if(isset($_POST['hodnota']))
                     $pocet++;
                     ?>
 <!--                    <a href="produkt.php">-->
+                        <a href="produkt.php?sku=<?=$i?>">
                         <div class="w3-col">
                         <div class="w3-card-4 w3-margin w3-white">
                             <?php $obraz = $string['obrazok']; ?>
@@ -111,10 +106,7 @@ if(isset($_POST['hodnota']))
                                 <h4>Pocet kusov na sklade: <span class="w3-opacity"><?=$pocetK?></span></h4>
                                 <?php $cena = $string['cena']; ?>
                                 <h4>Cena: <span class="w3-opacity"><?=$cena?> €</span></h4>
-                                <form method='post' class="zadnyForm">
-                                    <p><button name="hodnota" value='<?=$i?>'><b>Pozrieť produkt</b></button></p>
-                                </form>
-                                <p><button><b>Vložiť do košíka</b></button></p>
+                                <p><button><b>Pozrieť produkt</b></button></p>
                                 <?php if (isset($_SESSION['name'])) { ?>
                                     <?php if ($_SESSION['name'] == 'admin@admin') { ?>
                                         <form method='post' class="zadnyForm">
@@ -125,6 +117,7 @@ if(isset($_POST['hodnota']))
                             </div>
                         </div>
                         </div>
+                        </a>
 <!--                    </a>-->
                 <?php } ?>
                 <?php if ($pocet == 3) {
@@ -145,7 +138,7 @@ if(isset($_POST['hodnota']))
     <div class="col-22 col-s-4 aside">
         <?php if(Auth::isLogged()) { ?>
             <div class="login">
-                <h2>Ste prihlaseny ako <?=$_SESSION['username']?></h2>
+                <h2>Ste prihlásený ako <?=$_SESSION['username']?></h2>
                 <form method="post">
                     <input type="submit" name="logout" value="Odhlasit">
                 </form>
@@ -154,7 +147,7 @@ if(isset($_POST['hodnota']))
             <div class="login">
                 <h2>Login</h2>
                 <?php if(Auth::isBadLoggin()) { ?>
-                    <p class="cervena">Zadali ste zly login</p>
+                    <p class="cervena">Zadali ste zlý login</p>
                     <?php unset($_SESSION['bad']); ?>
                 <?php } ?>
                 <form method="post">
@@ -167,19 +160,43 @@ if(isset($_POST['hodnota']))
             </div>
         <?php } ?>
         <br>
-        <div class="registracia">
-            <h2>Registrácia</h2>
-            <div class="right">
-                <p class="normalne">Ak ešte u nás nemáte konto, zaregistrujte sa</p>
-                <button><b><a href="registracia.php">Registrovať</a></b></button>
+        <?php if(Auth::isLogged()) { ?>
+            <div class="kosik">
+                <h2>Váš košík</h2>
+                    <?php
+                    $sql = "SELECT MIN(id_nakupu) as total FROM nakup";
+                    $stmt = $conn->query($sql);
+                    $string = $stmt->fetch_assoc();
+                    $min = (int)$string['total'];
+                    $sql = "SELECT MAX(id_nakupu) as total FROM nakup";
+                    $stmt = $conn->query($sql);
+                    $string = $stmt->fetch_assoc();
+                    $max = (int)$string['total'];
+                    $userN = $_SESSION['name'];
+                    for ($i = $min; $i < $max+1; $i++) {
+                        $sql = "SELECT nakup.pocet_kusov as pocet_kusov, nazov, cena FROM nakup JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
+                        $stmt = $conn->query($sql);
+                        $string = $stmt->fetch_assoc();
+                        if (!is_null($string)) { ?>
+                            <div class="right">
+                                <p class="cierna"><b>Názov:</b> <?=$string['nazov']?></p>
+                                <p class="cierna"><b>Počet kosov:</b> <?=$string['pocet_kusov']?></p>
+                                <p class="cierna"><b>Celková cena:</b> <?=$string['cena'] * $string['pocet_kusov']?> €</p>
+                            </div>
+                            <br>
+                        <?php } ?>
+                    <?php } ?>
+                <button><b><a href="kosik.php">Pozrieť košík</a></b></button>
             </div>
-        </div>
-<!--        <br>-->
-<!--        <div class="right">-->
-<!--            <img src="pravy.png" class="obr">-->
-<!--            <h2>Japonsko</h2>-->
-<!--            <p>Japonsko (jap. 日本 – Nippon alebo Nihon; formálne: jap. 日本国 – Nippon-koku alebo Nihon-koku) je štát ležiaci na východnom okraji ázijského kontinentu, na východ od Číny a Kórey. Rozkladá sa od Ochotského mora na severe, po Východočínske more na juhovýchode. Zo západu ho obklopuje Japonské more a z východu a juhu Tichý oceán.</p>-->
-<!--        </div>-->
+        <?php } else { ?>
+            <div class="registracia">
+                <h2>Registrácia</h2>
+                <div class="right">
+                    <p class="normalne">Ak ešte u nás nemáte konto, zaregistrujte sa</p>
+                    <button><b><a href="registracia.php">Registrovať</a></b></button>
+                </div>
+            </div>
+        <?php } ?>
     </div>
     <div class="col-1 col-s-0">
 
