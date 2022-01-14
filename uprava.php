@@ -49,8 +49,8 @@ if(!isset($_SESSION['name'])){
             <li class="opacne druhe">Snowboardy</li>
             <li class="opacne druhe">Korčule</li>
             <li class="opacne druhe">Bežky</li>
-            <li class="opacne druhe">Doplnky</li>
             <li class="opacne druhe">Príslušenstvo</li>
+            <li class="opacne druhe">Doplnky</li>
             <li class="hlavne" onclick=dropdownSide("tretie")>Doplnky<i class="fa fa-caret-down"></i></li>
             <li class="opacne tretie">Cyklodoplnky</li>
             <li class="opacne tretie">Cyklovýbava</li>
@@ -131,6 +131,10 @@ if(!isset($_SESSION['name'])){
                         <p><label for="uprKategoria"><b class="cierna">Kategória: <?=$string['kategoria']?></b></label></p>
                         <input class="uprtr" type="number" placeholder="Kategória" name="uprKategoria" id="uprKategoria" min="1" max="5">
                         <button type="submit">Zmeniť</button>
+                    </form>
+
+                    <form method='post'>
+                        <p><button class="cervena" name="zmazProdukt" value='<?=$string['id_produktu']?>'><b>Odstrániť produkt</b></button></p>
                     </form>
                 </div>
 

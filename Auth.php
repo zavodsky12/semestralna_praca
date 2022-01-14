@@ -31,4 +31,7 @@ class Auth
     public static function isBadLoggin3() {
         return isset($_SESSION['bad3']);
     }
+    public static function mameObjednane() {
+        return isset($_SESSION['objednane']);
+    }
 }

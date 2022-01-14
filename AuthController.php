@@ -4,9 +4,11 @@ require "Auth.php";
 class AuthController
 {
     private $con;
+    private $conn;
 
     public function __construct()
     {
+        $this->conn = mysqli_connect("localhost","root","","databaza2");
         try {
             $this->con = new PDO("mysql:host=localhost;dbname=databaza2", "root", "");
             $this->con->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -46,8 +48,17 @@ class AuthController
         if (isset($_POST['uprKategoria'])) {
             $this->upravaKategoria($_POST['uprKategoria']);
         }
+        if (isset($_POST['zmazProdukt'])) {
+            $this->zmazProdukt($_POST['zmazProdukt']);
+        }
         if (isset($_POST['vlozDoK'])) {
             $this->vlozDoKosika($_POST['vlozDoK']);
+        }
+        if (isset($_POST['zmazKosik'])) {
+            $this->zmazKosik($_POST['zmazKosik']);
+        }
+        if (isset($_POST['doprava'])) {
+            $this->zauvidujPlatbu($_POST['doprava']);
         }
     }
 
@@ -168,6 +179,13 @@ class AuthController
         $sql = "UPDATE produkty SET kategoria = '$kategoria' WHERE id_produktu = '$i'";
         $this->con->query($sql);
     }
+    public function zmazProdukt($kategoria)
+    {
+        $sql = "DELETE FROM objednavky WHERE id_produktu = '$kategoria'";
+        $this->con->query($sql);
+        $sql = "DELETE FROM produkty WHERE id_produktu = '$kategoria'";
+        $this->con->query($sql);
+    }
     public function vlozDoKosika($pocet)
     {
         $i = $_SESSION['name'];
@@ -175,7 +193,38 @@ class AuthController
         $stmt = $this->con->prepare("SELECT id_pouzivatela FROM pouzivatelia WHERE email = '$i'");
         $stmt->execute();
         $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
-        $this->con->prepare("INSERT INTO nakup(id_pouzivatela, id_produktu, pocet_kusov) VALUES (?,?,?)")
+        $this->con->prepare("INSERT INTO objednavky(id_pouzivatela, id_produktu, pocet_kusov) VALUES (?,?,?)")
             ->execute([$posts[0], $e, $pocet]);
+    }
+    public function zmazKosik($kategoria)
+    {
+        $sql = "DELETE FROM nakup WHERE id_nakupu = '$kategoria'";
+        $this->con->query($sql);
+    }
+    public function zauvidujPlatbu($doprava)
+    {
+        $sql = "SELECT MAX(objednavka_cislo) as total FROM hotove_objednavky";
+        $stmt = $this->conn->query($sql);
+        $string = $stmt->fetch_assoc();
+        $max = (int)$string['total'];
+        $meno = $_SESSION['name'];
+        $sql = "SELECT id_pouzivatela FROM pouzivatelia WHERE email = '$meno'";
+        $stmt = $this->conn->query($sql);
+        $string = $stmt->fetch_assoc();
+        $user = $string['id_pouzivatela'];
+        $sql = "SELECT * FROM objednavky WHERE id_pouzivatela = '$user'";
+        $stmt = $this->conn->query($sql);
+        while($row = mysqli_fetch_assoc($stmt)){
+
+            $this->con->prepare("INSERT INTO hotove_objednavky(id_nakupu, id_pouzivatela, id_produktu, objednavka_cislo, pocet_kusov, dorucenie, platba) VALUES (?,?,?,?,?,?,?)")
+                ->execute([$row['id_nakupu'], $row['id_pouzivatela'], $row['id_produktu'], $max + 1, $row['pocet_kusov'], $doprava, $_POST['platba']]);
+            $pocet = $row['pocet_kusov'];
+            $produkt = $row['id_produktu'];
+            $sql = "UPDATE produkty SET pocet_kusov = pocet_kusov - '$pocet' WHERE id_produktu = '$produkt'";
+            $this->con->query($sql);
+        }
+        $sql = "DELETE FROM objednavky WHERE id_pouzivatela = '$user'";
+        $this->conn->query($sql);
+        $_SESSION['objednane'] = 'ano';
     }
 }

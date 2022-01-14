@@ -35,15 +35,15 @@ $conn = mysqli_connect("localhost","root","","databaza2");
             <li class="opacne prve"><a href="Letne/Bicykle.php" class="red">Bicykle</a></li>
             <li class="opacne prve"><a href="Letne/Kolobezky.html" class="red">Kolobežky</a></li>
             <li class="opacne prve"><a href="Letne/Korcule.html" class="red">Korčule</a></li>
-            <li class="opacne prve"><a href="Letne/Nahradne.html" class="red">Doplnky</a></li>
             <li class="opacne prve"><a href="Letne/Doplnky.html" class="red">Príslušenstvo</a></li>
+            <li class="opacne prve"><a href="Letne/Nahradne.html" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("druhe")>Zimný šport<i class="fa fa-caret-down"></i></li>
             <li class="opacne druhe">Lyže</li>
             <li class="opacne druhe">Snowboardy</li>
             <li class="opacne druhe">Korčule</li>
             <li class="opacne druhe">Bežky</li>
-            <li class="opacne druhe">Doplnky</li>
             <li class="opacne druhe">Príslušenstvo</li>
+            <li class="opacne druhe">Doplnky</li>
             <li class="hlavne" onclick=dropdownSide("tretie")>Doplnky<i class="fa fa-caret-down"></i></li>
             <li class="opacne tretie">Cyklodoplnky</li>
             <li class="opacne tretie">Cyklovýbava</li>

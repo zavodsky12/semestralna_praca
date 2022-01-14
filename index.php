@@ -63,12 +63,14 @@ if(isset($_POST['idcko']))
             <li class="opacne tretie">Zimné doplnky</li>
         </ul>
         <?php if (isset($_SESSION['name'])) { ?>
+            <br>
+            <ul>
+                <li class="hlavne"><a href="kosik.php">Pozrieť košík</a></li>
+                <li class="hlavne"><a href="mojeObjednavky.php">Pozrieť moje objednávky</a></li>
             <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                    <br>
-                <ul>
                     <li class="hlavne"><a href="pridaj.php">Pridaj produkt</a></li>
-                </ul>
             <?php } ?>
+            </ul>
         <?php } ?>
     </div>
 
@@ -164,17 +166,17 @@ if(isset($_POST['idcko']))
             <div class="kosik">
                 <h2>Váš košík</h2>
                     <?php
-                    $sql = "SELECT MIN(id_nakupu) as total FROM nakup";
+                    $sql = "SELECT MIN(id_nakupu) as total FROM objednavky";
                     $stmt = $conn->query($sql);
                     $string = $stmt->fetch_assoc();
                     $min = (int)$string['total'];
-                    $sql = "SELECT MAX(id_nakupu) as total FROM nakup";
+                    $sql = "SELECT MAX(id_nakupu) as total FROM objednavky";
                     $stmt = $conn->query($sql);
                     $string = $stmt->fetch_assoc();
                     $max = (int)$string['total'];
                     $userN = $_SESSION['name'];
                     for ($i = $min; $i < $max+1; $i++) {
-                        $sql = "SELECT nakup.pocet_kusov as pocet_kusov, nazov, cena FROM nakup JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
+                        $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
                         $stmt = $conn->query($sql);
                         $string = $stmt->fetch_assoc();
                         if (!is_null($string)) { ?>
