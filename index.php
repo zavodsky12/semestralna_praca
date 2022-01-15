@@ -16,15 +16,21 @@ if(isset($_POST['idcko']))
 
 
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="vlastne.css">
     <link rel="stylesheet" href="nove.css">
-    <title>Obchod so športovými potrebami bikeski.sk | Najnovšie produkty</title>
+    <title>Obchod so športovými potrebami bikeski.sk | Všetky produkty</title>
     <script src="javaskripty.js"></script>
+    <script>
+        const aktualneData = {name:"John", age:30, city:"New York"};
+    </script>
+    <script>
+        // const table = new Triedenie();
+    </script>
 </head>
 
 <body>
@@ -75,9 +81,50 @@ if(isset($_POST['idcko']))
     </div>
 
     <div class="col-6 col-s-8">
-        <div class="main">
-            <h1>Najnovšie produkty</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <div class="main" id="hlav">
+            <h1>Všetky produkty</h1>
+            <div class="slideshow-container">
+                <h2 class="cierna", style="padding: 10px">Kliknutím zobrazíte produkt</h2>
+                <div class="mySlides">
+                    <a href="produkt.php?sku=1"><img src="files/bicykel.jpg" alt="Nature" class="slider-obr"></a>
+<!--                    <h2>Bicykel na dlhe jazdy</h2>-->
+                </div>
+
+                <div class="mySlides">
+                    <a href="produkt.php?sku=2"><img src="files/lyze.jpg" alt="Nature" class="slider-obr"></a>
+<!--                    <h2>Lyze na zimu</h2>-->
+                </div>
+
+                <div class="mySlides">
+                    <a href="produkt.php?sku=8"><img src="files/snowboard-jones.jpg" alt="Nature" class="slider-obr"></a>
+<!--                    <h2>Snowboard Jones</h2>-->
+                </div>
+
+                <div class="mySlides">
+                    <a href="produkt.php?sku=10"><img src="files/2022-01-15-17-22-53_Elektrická-kolobežka-inSPORTline-Voltero.jpg" alt="Nature" class="slider-obr"></a>
+<!--                    <h3>Elektricka kolobezka inSPORTline</h3>-->
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+
+            </div>
+            <div class="dot-container" style="text-align: center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+            <script>
+                showSlides(4);
+                posuvaj();
+            </script>
+            <br>
+            <li class="sortovace" onclick=utriedNazov("hlav")>Utrieď podľa názvu</li>
+            <li class="sortovace" onclick=utriedCena("hlav")>Utrieď podľa ceny</li>
+            <li class="sortovace" onclick=utriedPocet("hlav")>Utrieď podľa počtu produktov na sklade</li>
+            <br>
+            <input class="cierna vyhladaj" type="text" id="filtrovanie" onkeyup="filterList()" placeholder="Vyhľadaj produkt.." title="Type in a name">
             <?php
             $pocet = 0;
             $sql = "SELECT MIN(id_produktu) as total FROM produkty";
@@ -95,8 +142,7 @@ if(isset($_POST['idcko']))
                 if (!is_null($string)) {
                     $pocet++;
                     ?>
-<!--                    <a href="produkt.php">-->
-                        <a href="produkt.php?sku=<?=$i?>">
+                        <a href="produkt.php?sku=<?=$i?>" class="horne">
                         <div class="w3-col">
                         <div class="w3-card-4 w3-margin w3-white">
                             <?php $obraz = $string['obrazok']; ?>
@@ -105,9 +151,9 @@ if(isset($_POST['idcko']))
                                 <?php $meno = $string['nazov']; ?>
                                 <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
                                 <?php $pocetK = $string['pocet_kusov']; ?>
-                                <h4>Pocet kusov na sklade: <span class="w3-opacity"><?=$pocetK?></span></h4>
+                                <h4>Pocet kusov na sklade: <span class="w3-opacity pocetTr"><?=$pocetK?></span></h4>
                                 <?php $cena = $string['cena']; ?>
-                                <h4>Cena: <span class="w3-opacity"><?=$cena?> €</span></h4>
+                                <h4>Cena: <span class="w3-opacity cenaTr"><?=$cena?> €</span></h4>
                                 <p><button><b>Pozrieť produkt</b></button></p>
                                 <?php if (isset($_SESSION['name'])) { ?>
                                     <?php if ($_SESSION['name'] == 'admin@admin') { ?>
@@ -120,7 +166,6 @@ if(isset($_POST['idcko']))
                         </div>
                         </div>
                         </a>
-<!--                    </a>-->
                 <?php } ?>
                 <?php if ($pocet == 3) {
                     $pocet = 0;
