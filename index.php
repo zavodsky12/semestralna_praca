@@ -71,6 +71,12 @@ if(isset($_POST['idcko']))
                     <li class="hlavne"><a href="pridaj.php">Pridaj produkt</a></li>
             <?php } ?>
             </ul>
+        <?php } else { ?>
+            <br>
+            <ul>
+                <li class="hlavne"><a href="prihlasenie.php">Prihlásiť sa</a></li>
+                <li class="hlavne"><a href="registracia.php">Registrovať</a></li>
+            </ul>
         <?php } ?>
     </div>
 
@@ -196,7 +202,7 @@ if(isset($_POST['idcko']))
                     <input type="email" name="login">
                     <label for="controle" class="cierna">Heslo:</label>
                     <input type="password" name="password">
-                    <input type="submit" value="Prihlasit">
+                    <input type="submit" value="Prihlásiť">
                 </form>
             </div>
         <?php } ?>

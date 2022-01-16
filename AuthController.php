@@ -54,6 +54,9 @@ class AuthController
         if (isset($_POST['vlozDoK'])) {
             $this->vlozDoKosika($_POST['vlozDoK']);
         }
+        if (isset($_POST['uprMnozstvo'])) {
+            $this->upravaMnozstvo($_POST['uprMnozstvo']);
+        }
         if (isset($_POST['zmazKosik'])) {
             $this->zmazKosik($_POST['zmazKosik']);
         }
@@ -233,5 +236,12 @@ class AuthController
         $sql = "DELETE FROM objednavky WHERE id_pouzivatela = '$user'";
         $this->conn->query($sql);
         $_SESSION['objednane'] = 'ano';
+    }
+
+    private function upravaMnozstvo($uprMnozstvo)
+    {
+        $i = $_POST['uprMnPoct'];
+        $stmt = $this->con->prepare("UPDATE objednavky SET pocet_kusov = '$uprMnozstvo' WHERE id_nakupu = ?");
+        $stmt->execute([$i]);
     }
 }

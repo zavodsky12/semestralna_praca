@@ -128,20 +128,22 @@ if(!isset($_SESSION['name'])){
                     <hr>
                     <table>
                         <tr>
-                            <th>Názov</th>
+                            <th>Názov produktu</th>
+                            <th>Č. obj</th>
                             <th>Počet kusov</th>
                             <th>Celková cena</th>
                             <th>Doručenie</th>
                             <th>Platba</th>
                         </tr>
                         <?php for ($i = $min; $i < $max+1; $i++) {
-                            $sql = "SELECT obrazok, hotove_objednavky.pocet_kusov as pocet_kusov, nazov, cena, dorucenie, platba FROM hotove_objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
+                            $sql = "SELECT id_nakupu, obrazok, hotove_objednavky.pocet_kusov as pocet_kusov, nazov, cena, dorucenie, platba FROM hotove_objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
                             $stmt = $conn->query($sql);
                             $string = $stmt->fetch_assoc();
                             if (!is_null($string)) { ?>
 
                                 <tr>
                                     <td><img src="files/<?=$string['obrazok']?>" alt="Nature" class="objednany-obr"><?=$string['nazov']?></td>
+                                    <td><?=$string['id_nakupu']?></td>
                                     <td><?=$string['pocet_kusov']?></td>
                                     <td><?=$string['cena'] * $string['pocet_kusov']?> €</td>
                                     <td><?=$string['dorucenie']?></td>

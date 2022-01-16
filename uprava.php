@@ -88,12 +88,6 @@ if(!isset($_SESSION['name'])){
                     <h2 class="cierna">Popis</h2>
                     <p class="cierna"><?=$string['popis']?></p>
 
-<!--                    <form method="post" enctype="multipart/form-data">-->
-<!--                        <label for="uprObr"><b class="cierna">Obrázok:</b></label>-->
-<!--                        <input class="uprtr cierna" type="file" id="uprObr" name="uprObr">-->
-<!--                        <button type="submit">Zmeniť</button>-->
-<!--                    </form>-->
-
                     <form method="post">
                         <p><label for="uprNazov"><b class="cierna">Názov: <?=$string['nazov']?></b></label></p>
                         <input class="uprtr" type="text" placeholder="Názov" name="uprNazov" id="uprNazov">

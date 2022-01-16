@@ -31,40 +31,28 @@ function utriedPocet(trieda) {
 function vymena(triedene, podla) {
     var vymeniliSmeRaz = false;
     var vymeniliSme = true;
-    var menime = true;
     while (vymeniliSme) {
         vymeniliSme = false;
         for (i = 0; i < (podla.length - 1); i++)
         {
-            menime = false;
             if (podla[i].innerHTML.toLowerCase() > podla[i + 1].innerHTML.toLowerCase()) {
-                menime = true;
-                break;
+                triedene[i].parentNode.insertBefore(triedene[i + 1], triedene[i]);
+                vymeniliSme = true;
+                vymeniliSmeRaz = true;
             }
-        }
-        if (menime) {
-            triedene[i].parentNode.insertBefore(triedene[i + 1], triedene[i]);
-            vymeniliSme = true;
-            vymeniliSmeRaz = true;
         }
     }
     if (!vymeniliSmeRaz) {
         vymeniliSme = true;
-        menime = true;
         while (vymeniliSme) {
             vymeniliSme = false;
             for (i = 0; i < (podla.length - 1); i++)
             {
-                menime = false;
                 if (podla[i].innerHTML.toLowerCase() < podla[i + 1].innerHTML.toLowerCase()) {
-                    menime = true;
-                    break;
+                    triedene[i].parentNode.insertBefore(triedene[i + 1], triedene[i]);
+                    vymeniliSme = true;
+                    vymeniliSmeRaz = true;
                 }
-            }
-            if (menime) {
-                triedene[i].parentNode.insertBefore(triedene[i + 1], triedene[i]);
-                vymeniliSme = true;
-                vymeniliSmeRaz = true;
             }
         }
     }
@@ -72,40 +60,28 @@ function vymena(triedene, podla) {
 function vymenaCislo(triedene, podla) {
     var vymeniliSmeRaz = false;
     var vymeniliSme = true;
-    var menime = true;
     while (vymeniliSme) {
         vymeniliSme = false;
         for (i = 0; i < (podla.length - 1); i++)
         {
-            menime = false;
             if (parseInt(podla[i].innerHTML) > parseInt(podla[i + 1].innerHTML)) {
-                menime = true;
-                break;
+                triedene[i].parentNode.insertBefore(triedene[i + 1], triedene[i]);
+                vymeniliSme = true;
+                vymeniliSmeRaz = true;
             }
-        }
-        if (menime) {
-            triedene[i].parentNode.insertBefore(triedene[i + 1], triedene[i]);
-            vymeniliSme = true;
-            vymeniliSmeRaz = true;
         }
     }
     if (!vymeniliSmeRaz) {
         vymeniliSme = true;
-        menime = true;
         while (vymeniliSme) {
             vymeniliSme = false;
             for (i = 0; i < (podla.length - 1); i++)
             {
-                menime = false;
                 if (parseInt(podla[i].innerHTML) < parseInt(podla[i + 1].innerHTML)) {
-                    menime = true;
-                    break;
+                    triedene[i].parentNode.insertBefore(triedene[i + 1], triedene[i]);
+                    vymeniliSme = true;
+                    vymeniliSmeRaz = true;
                 }
-            }
-            if (menime) {
-                triedene[i].parentNode.insertBefore(triedene[i + 1], triedene[i]);
-                vymeniliSme = true;
-                vymeniliSmeRaz = true;
             }
         }
     }
@@ -167,4 +143,62 @@ function posuvaj() {
     slides[slideIndex-1].style.display = "block";
     dots[slideIndex-1].className += " active";
     setTimeout(posuvaj, 8000); // Change image every 2 seconds
+}
+function vytvorPrihlasenie() {
+    var htmlElement = document.getElementById('stranka');
+    htmlElement.style.backgroundColor = "#33b5e5";
+    if (window.screen.width > 500) {
+        htmlElement.style.width = "500px";
+    } else {
+        htmlElement.style.width = "100%";
+    }
+    htmlElement.style.height = "100%";
+    htmlElement.style.padding = "10px";
+    htmlElement.style.margin = "auto";
+    let hlavna = document.createElement('div');
+    hlavna.style.backgroundColor = "#bbb";
+    let nadpis = document.createElement('h1');
+    nadpis.style.padding = "5px";
+    nadpis.innerHTML = "Prihlásenie";
+    htmlElement.append(hlavna);
+    hlavna.append(nadpis);
+    let formicka = document.createElement('form');
+    formicka.method = "post";
+    let menoNadpis = document.createElement('label');
+    let menoText = document.createElement('input');
+    menoNadpis.innerHTML = "Email: ";
+    menoText.style.width = "100%";
+    menoText.style.padding = "15px";
+    menoText.style.margin = "5px 0 22px 0";
+    menoText.style.display = "inline-block";
+    menoText.style.backgroundColor = "#f1f1f1";
+    menoText.style.border = "none";
+    menoText.type = "email";
+    menoText.placeholder = "Email";
+    menoText.name = "login";
+    menoText.id = "login";
+    let hesloNadpis = document.createElement('label');
+    let hesloText = document.createElement('input');
+    hesloNadpis.innerHTML = "Heslo: ";
+    hesloNadpis.style.color = "black";
+    hesloText.style.width = "100%";
+    hesloText.style.padding = "15px";
+    hesloText.style.margin = "5px 0 22px 0";
+    hesloText.style.display = "inline-block";
+    hesloText.style.backgroundColor = "#f1f1f1";
+    hesloText.style.border = "none";
+    hesloText.type = "password";
+    hesloText.placeholder = "Heslo";
+    hesloText.name = "password";
+    hesloText.id = "password";
+    let tlacitko = document.createElement('button');
+    tlacitko.innerHTML = "Prihlásiť";
+    tlacitko.type = "submit";
+    tlacitko.id = 'btn';
+    hlavna.append(formicka);
+    formicka.appendChild(menoNadpis);
+    formicka.appendChild(menoText);
+    formicka.appendChild(hesloNadpis);
+    formicka.appendChild(hesloText);
+    formicka.appendChild(tlacitko);
 }

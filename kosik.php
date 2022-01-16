@@ -107,6 +107,13 @@ if(!isset($_SESSION['name'])){
                         <td><?=$string['pocet_kusov']?></td>
                     </tr>
                 </table>
+                <br>
+                <form method='post' style="padding: 0px">
+                    <p><label for="uprMnozstvo"><b class="cierna">Zvoľte množstvo produktov:</b></label></p>
+                    <input class="uprtr" type="number" placeholder="Množstvo" name="uprMnozstvo" id="uprMnozstvo">
+                    <input class="uprtr" type="hidden" name="uprMnPoct" value="<?=$i?>">
+                    <button type="submit"><b>Upraviť produkt</b></button>
+                </form>
                 <form method='post' style="padding: 0px">
                     <p><button class="cervena" name="zmazKosik" value='<?=$i?>'><b>Odstrániť produkt</b></button></p>
                 </form>
