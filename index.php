@@ -25,12 +25,6 @@ if(isset($_POST['idcko']))
     <link rel="stylesheet" href="nove.css">
     <title>Obchod so športovými potrebami bikeski.sk | Všetky produkty</title>
     <script src="javaskripty.js"></script>
-    <script>
-        const aktualneData = {name:"John", age:30, city:"New York"};
-    </script>
-    <script>
-        // const table = new Triedenie();
-    </script>
 </head>
 
 <body>
@@ -53,20 +47,20 @@ if(isset($_POST['idcko']))
             <li class="opacne prve"><a href="Letne/Doplnky.html" class="red">Príslušenstvo</a></li>
             <li class="opacne prve"><a href="Letne/Nahradne.html" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("druhe")>Zimný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne druhe">Lyže</li>
-            <li class="opacne druhe">Snowboardy</li>
-            <li class="opacne druhe">Korčule</li>
-            <li class="opacne druhe">Bežky</li>
-            <li class="opacne druhe">Príslušenstvo</li>
-            <li class="opacne druhe">Doplnky</li>
+            <li class="opacne druhe"><a href="Zimne/Lyze.php" class="red">Lyže</a></li>
+            <li class="opacne druhe"><a href="Zimne/Snowboardy.php" class="red">Snowboardy</a></li>
+            <li class="opacne druhe"><a href="Zimne/Korcule.php" class="red">Korčule</a></li>
+            <li class="opacne druhe"><a href="Zimne/Bezky.php" class="red">Bežky</a></li>
+            <li class="opacne druhe"><a href="Zimne/Prislusenstvo.php" class="red">Príslušenstvo</a></li>
+            <li class="opacne druhe"><a href="Zimne/Doplnky.php" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("tretie")>Doplnky<i class="fa fa-caret-down"></i></li>
-            <li class="opacne tretie">Cyklodoplnky</li>
-            <li class="opacne tretie">Cyklovýbava</li>
-            <li class="opacne tretie">Lyžiarky</li>
-            <li class="opacne tretie">Viazania</li>
-            <li class="opacne tretie">Palice</li>
-            <li class="opacne tretie">Letné doplnky</li>
-            <li class="opacne tretie">Zimné doplnky</li>
+            <li class="opacne tretie"><a href="Doplnky/Cyklodoplnky.php" class="red">Cyklodoplnky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/Cyklovybava.php" class="red">Cyklovýbava</a></li>
+            <li class="opacne tretie"><a href="Doplnky/Lyziarky.php" class="red">Lyžiarky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/Viazania.php" class="red">Viazania</a></li>
+            <li class="opacne tretie"><a href="Doplnky/Palice.php" class="red">Palice</a></li>
+            <li class="opacne tretie"><a href="Doplnky/Letne_doplnky.php" class="red">Letné doplnky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/Zimne_doplnky.php" class="red">Zimné doplnky</a></li>
         </ul>
         <?php if (isset($_SESSION['name'])) { ?>
             <br>
@@ -84,9 +78,9 @@ if(isset($_POST['idcko']))
         <div class="main" id="hlav">
             <h1>Všetky produkty</h1>
             <div class="slideshow-container">
-                <h2 class="cierna", style="padding: 10px">Kliknutím zobrazíte produkt</h2>
+                <h2 class="cierna", style="padding: 10px; background-color: #bbb; text-align: center">Kliknutím zobrazíte produkt</h2>
                 <div class="mySlides">
-                    <a href="produkt.php?sku=1"><img src="files/bicykel.jpg" alt="Nature" class="slider-obr"></a>
+                    <a href="produkt.php?sku=6"><img src="files/2022-01-11-17-03-27_horsky-bicykel.jpg" alt="Nature" class="slider-obr"></a>
 <!--                    <h2>Bicykel na dlhe jazdy</h2>-->
                 </div>
 

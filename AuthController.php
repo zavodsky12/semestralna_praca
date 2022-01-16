@@ -66,10 +66,12 @@ class AuthController
     {
         $dlzka = strlen($name);
         $passwd = $_POST['password'];
+//        $passwd = escapeshellcmd($passwd);
         $dlzka2 = strlen($passwd);
+        $name = escapeshellcmd($name);
         if ($dlzka > 2 && $dlzka < 255 && $dlzka2 > 2 && $dlzka2 < 255) {
-            $stmt = $this->con->prepare("SELECT email FROM pouzivatelia WHERE email = '$name'");
-            $stmt->execute();
+            $stmt = $this->con->prepare("SELECT email FROM pouzivatelia WHERE email = ?");
+            $stmt->execute([$name]);
             $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
             if (empty($posts)) {
                 //$this->con->prepare("INSERT INTO prihlasenia(meno, heslo) VALUES (?,?)")
@@ -77,13 +79,15 @@ class AuthController
                 //Auth::login($name);
                 Auth::badLoggin($name);
             } else {
-                $stmt = $this->con->prepare("SELECT heslo FROM pouzivatelia WHERE email = '$name'");
-                $stmt->execute();
+                $stmt = $this->con->prepare("SELECT heslo FROM pouzivatelia WHERE email = ?");
+                $stmt->execute([$name]);
+//                $stmt->execute();
 
                 $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
-                if ($passwd == $posts[0]) {
-                    $stmt = $this->con->prepare("SELECT meno FROM pouzivatelia WHERE email = '$name'");
-                    $stmt->execute();
+                if (password_verify($passwd, $posts[0])) {
+                    $stmt = $this->con->prepare("SELECT meno FROM pouzivatelia WHERE email = ?");
+                    $stmt->execute([$name]);
+//                    $stmt->execute();
                     $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
                     Auth::login($name, $posts[0]);
                 } else {
@@ -105,15 +109,18 @@ class AuthController
         $dlzka = strlen($name);
         $passwd = $_POST['password'];
         $user = $_POST['username'];
+        $name = escapeshellcmd($name);
+        $user = escapeshellcmd($user);
         $dlzka2 = strlen($passwd);
+        $hash = password_hash($passwd, PASSWORD_DEFAULT);
         if ($dlzka > 2 && $dlzka < 255 && $dlzka2 > 2 && $dlzka2 < 255) {
-            $stmt = $this->con->prepare("SELECT meno FROM pouzivatelia WHERE meno = '$name'");
-            $stmt->execute();
+            $stmt = $this->con->prepare("SELECT meno FROM pouzivatelia WHERE meno = ?");
+            $stmt->execute([$name]);
             $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
             if (empty($posts)) {
                 if ($_POST['password'] == $_POST['psw-repeat']) {
                     $this->con->prepare("INSERT INTO pouzivatelia(email, meno, heslo) VALUES (?,?,?)")
-                        ->execute([$name, $user, $passwd]);
+                        ->execute([$name, $user, $hash]);
                     Auth::login($name, $user);
                     //Auth::badLoggin($name);
                 } else {
@@ -190,15 +197,15 @@ class AuthController
     {
         $i = $_SESSION['name'];
         $e = $_POST['end'];
-        $stmt = $this->con->prepare("SELECT id_pouzivatela FROM pouzivatelia WHERE email = '$i'");
-        $stmt->execute();
+        $stmt = $this->con->prepare("SELECT id_pouzivatela FROM pouzivatelia WHERE email = ?");
+        $stmt->execute([$i]);
         $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
         $this->con->prepare("INSERT INTO objednavky(id_pouzivatela, id_produktu, pocet_kusov) VALUES (?,?,?)")
             ->execute([$posts[0], $e, $pocet]);
     }
     public function zmazKosik($kategoria)
     {
-        $sql = "DELETE FROM nakup WHERE id_nakupu = '$kategoria'";
+        $sql = "DELETE FROM objednavky WHERE id_nakupu = '$kategoria'";
         $this->con->query($sql);
     }
     public function zauvidujPlatbu($doprava)

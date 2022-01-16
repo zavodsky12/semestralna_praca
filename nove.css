@@ -120,9 +120,35 @@ button {
 .w3-container {
     padding:0.01em 16px;
 }
-.w3-col {
-    width: 33.33333%;
-    float: left;
+@media only screen and (min-width: 0px) {
+    .w3-col {
+        width: 100%;
+        float: left;
+    }
+}
+@media only screen and (min-width: 500px) {
+    .w3-col {
+        width: 50%;
+        float: left;
+    }
+}
+@media only screen and (min-width: 1000px) {
+    .w3-col {
+        width: 33.33333%;
+        float: left;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .w3-col {
+        width: 50%;
+        float: left;
+    }
+}
+@media only screen and (min-width: 1500px) {
+    .w3-col {
+        width: 33.33333%;
+        float: left;
+    }
 }
 .rovnaka-vyska {
     height: 80px;
@@ -212,7 +238,7 @@ button {
 /* Slideshow container */
 .slideshow-container {
     position: relative;
-    background: #f1f1f1f1;
+    background: white;
 }
 
 /* Slides */
@@ -276,5 +302,6 @@ button {
 .slider-obr {
     height: 300px;
     width:auto;
+    max-width: 100%;
     position: relative;
 }
