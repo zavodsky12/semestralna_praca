@@ -190,7 +190,7 @@ if(isset($_POST['idcko']))
                     if (!is_null($string)) { ?>
                         <div class="right">
                             <p class="cierna"><b>Názov:</b> <?=$string['nazov']?></p>
-                            <p class="cierna"><b>Počet kosov:</b> <?=$string['pocet_kusov']?></p>
+                            <p class="cierna"><b>Počet kusov:</b> <?=$string['pocet_kusov']?></p>
                             <p class="cierna"><b>Celková cena:</b> <?=$string['cena'] * $string['pocet_kusov']?> €</p>
                         </div>
                         <br>

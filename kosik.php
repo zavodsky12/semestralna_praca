@@ -92,7 +92,7 @@ if(!isset($_SESSION['name'])){
             $string = $stmt->fetch_assoc();
             if (!is_null($string)) {
                 for ($i = $min; $i < $max+1; $i++) {
-                    $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
+                    $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, produkty.pocet_kusov as pocet_kusovv, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
                     $stmt = $conn->query($sql);
                     $string = $stmt->fetch_assoc();
                     if (!is_null($string)) { ?>
@@ -118,7 +118,7 @@ if(!isset($_SESSION['name'])){
                             <br>
                             <form method='post' style="padding: 0px">
                                 <p><label for="uprMnozstvo"><b class="cierna">Zvoľte množstvo produktov:</b></label></p>
-                                <input class="uprtr" type="number" placeholder="Množstvo" name="uprMnozstvo" id="uprMnozstvo">
+                                <input class="uprtr" type="number" placeholder="Množstvo" name="uprMnozstvo" id="uprMnozstvo" min="1" max="<?=$string['pocet_kusovv']?>">
                                 <input class="uprtr" type="hidden" name="uprMnPoct" value="<?=$i?>">
                                 <button type="submit"><b>Upraviť produkt</b></button>
                             </form>

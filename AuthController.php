@@ -122,8 +122,8 @@ class AuthController
             $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
             if (empty($posts)) {
                 if ($_POST['password'] == $_POST['psw-repeat']) {
-                    $this->con->prepare("INSERT INTO pouzivatelia(email, meno, heslo) VALUES (?,?,?)")
-                        ->execute([$name, $user, $hash]);
+                    $stmt = $this->con->prepare("INSERT INTO pouzivatelia(email, meno, heslo) VALUES (?,?,?)");
+                    $stmt->execute([$name, $user, $hash]);
                     Auth::login($name, $user);
                     //Auth::badLoggin($name);
                 } else {
