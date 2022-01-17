@@ -144,7 +144,7 @@ function posuvaj() {
     dots[slideIndex-1].className += " active";
     setTimeout(posuvaj, 8000); // Change image every 2 seconds
 }
-function vytvorPrihlasenie() {
+function vytvorPrihlasenie(prih) {
     var htmlElement = document.getElementById('stranka');
     htmlElement.style.backgroundColor = "#33b5e5";
     if (window.screen.width > 500) {
@@ -167,12 +167,7 @@ function vytvorPrihlasenie() {
     let menoNadpis = document.createElement('label');
     let menoText = document.createElement('input');
     menoNadpis.innerHTML = "Email: ";
-    menoText.style.width = "100%";
-    menoText.style.padding = "15px";
-    menoText.style.margin = "5px 0 22px 0";
-    menoText.style.display = "inline-block";
-    menoText.style.backgroundColor = "#f1f1f1";
-    menoText.style.border = "none";
+    menoText.className = "registr";
     menoText.type = "email";
     menoText.placeholder = "Email";
     menoText.name = "login";
@@ -180,13 +175,7 @@ function vytvorPrihlasenie() {
     let hesloNadpis = document.createElement('label');
     let hesloText = document.createElement('input');
     hesloNadpis.innerHTML = "Heslo: ";
-    hesloNadpis.style.color = "black";
-    hesloText.style.width = "100%";
-    hesloText.style.padding = "15px";
-    hesloText.style.margin = "5px 0 22px 0";
-    hesloText.style.display = "inline-block";
-    hesloText.style.backgroundColor = "#f1f1f1";
-    hesloText.style.border = "none";
+    hesloText.className = "registr";
     hesloText.type = "password";
     hesloText.placeholder = "Heslo";
     hesloText.name = "password";
@@ -195,6 +184,12 @@ function vytvorPrihlasenie() {
     tlacitko.innerHTML = "Prihlásiť";
     tlacitko.type = "submit";
     tlacitko.id = 'btn';
+    if (prih) {
+        let p = document.createElement('p');
+        p.className = "cervena";
+        p.innerHTML = "Zadali ste zlý login";
+        hlavna.append(p);
+    }
     hlavna.append(formicka);
     formicka.appendChild(menoNadpis);
     formicka.appendChild(menoText);

@@ -24,7 +24,7 @@ $_SERVER['DOCUMENT_ROOT'] = "index.php";
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../vlastne.css">
     <link rel="stylesheet" href="../nove.css">
-    <title>Obchod so športovými potrebami bikeski.sk | Letný šport</title>
+    <title>Obchod so športovými potrebami bikeski.sk | Zimný šport</title>
     <script src="../javaskripty.js"></script>
 </head>
 
@@ -42,18 +42,18 @@ $_SERVER['DOCUMENT_ROOT'] = "index.php";
         <ul>
             <li class="hlavne"><a href="../index.php">Hlavná stránka</a></li>
             <li class="hlavne" onclick=dropdownSide("prve")>Letný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne prve"><a href="index.php?prod=1" class="red">Bicykle</a></li>
-            <li class="opacne prve"><a href="index.php?prod=2" class="red">Kolobežky</a></li>
-            <li class="opacne prve"><a href="index.php?prod=3" class="red">Korčule</a></li>
-            <li class="opacne prve"><a href="index.php?prod=4" class="red">Príslušenstvo</a></li>
-            <li class="opacne prve"><a href="index.php?prod=5" class="red">Doplnky</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=1" class="red">Bicykle</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=2" class="red">Kolobežky</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=3" class="red">Korčule</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=4" class="red">Príslušenstvo</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=5" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("druhe")>Zimný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne druhe"><a href="../Zimne/index.php?prod=1" class="red">Lyže</a></li>
-            <li class="opacne druhe"><a href="../Zimne/index.php?prod=2" class="red">Snowboardy</a></li>
-            <li class="opacne druhe"><a href="../Zimne/index.php?prod=3" class="red">Korčule</a></li>
-            <li class="opacne druhe"><a href="../Zimne/index.php?prod=4" class="red">Bežky</a></li>
-            <li class="opacne druhe"><a href="../Zimne/index.php?prod=5" class="red">Príslušenstvo</a></li>
-            <li class="opacne druhe"><a href="../Zimne/index.php?prod=6" class="red">Doplnky</a></li>
+            <li class="opacne druhe"><a href="index.php?prod=1" class="red">Lyže</a></li>
+            <li class="opacne druhe"><a href="index.php?prod=2" class="red">Snowboardy</a></li>
+            <li class="opacne druhe"><a href="index.php?prod=3" class="red">Korčule</a></li>
+            <li class="opacne druhe"><a href="index.php?prod=4" class="red">Bežky</a></li>
+            <li class="opacne druhe"><a href="index.php?prod=5" class="red">Príslušenstvo</a></li>
+            <li class="opacne druhe"><a href="index.php?prod=6" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("tretie")>Doplnky<i class="fa fa-caret-down"></i></li>
             <li class="opacne tretie"><a href="../Doplnky/index.php" class="red">Cyklodoplnky</a></li>
             <li class="opacne tretie"><a href="../Doplnky/index.php" class="red">Cyklovýbava</a></li>
@@ -83,7 +83,7 @@ $_SERVER['DOCUMENT_ROOT'] = "index.php";
 
     <div class="col-6 col-s-8">
         <div class="main" id="hlav">
-            <h1>Letný šport</h1>
+            <h1>Zimný šport</h1>
             <li class="sortovace" onclick=utriedNazov("hlav")>Utrieď podľa názvu</li>
             <li class="sortovace" onclick=utriedCena("hlav")>Utrieď podľa ceny</li>
             <li class="sortovace" onclick=utriedPocet("hlav")>Utrieď podľa počtu produktov na sklade</li>
@@ -107,7 +107,7 @@ $_SERVER['DOCUMENT_ROOT'] = "index.php";
                 $stmt = $conn->query($sql);
                 $string = $stmt->fetch_assoc();
                 if (!is_null($string)) {
-                    if ($string['typ'] == 'L' && ($string['kategoria'] == $end || strlen($end) > 3)) {
+                    if ($string['typ'] == 'Z' && ($string['kategoria'] == $end || strlen($end) > 3)) {
                     $pocet++;
                     ?>
                     <a href="../produkt.php?sku=<?=$i?>" class="horne">

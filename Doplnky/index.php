@@ -24,7 +24,7 @@ $_SERVER['DOCUMENT_ROOT'] = "index.php";
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../vlastne.css">
     <link rel="stylesheet" href="../nove.css">
-    <title>Obchod so športovými potrebami bikeski.sk | Letný šport</title>
+    <title>Obchod so športovými potrebami bikeski.sk | Zimný šport</title>
     <script src="../javaskripty.js"></script>
 </head>
 
@@ -42,11 +42,11 @@ $_SERVER['DOCUMENT_ROOT'] = "index.php";
         <ul>
             <li class="hlavne"><a href="../index.php">Hlavná stránka</a></li>
             <li class="hlavne" onclick=dropdownSide("prve")>Letný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne prve"><a href="index.php?prod=1" class="red">Bicykle</a></li>
-            <li class="opacne prve"><a href="index.php?prod=2" class="red">Kolobežky</a></li>
-            <li class="opacne prve"><a href="index.php?prod=3" class="red">Korčule</a></li>
-            <li class="opacne prve"><a href="index.php?prod=4" class="red">Príslušenstvo</a></li>
-            <li class="opacne prve"><a href="index.php?prod=5" class="red">Doplnky</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=1" class="red">Bicykle</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=2" class="red">Kolobežky</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=3" class="red">Korčule</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=4" class="red">Príslušenstvo</a></li>
+            <li class="opacne prve"><a href="../Letne/index.php?prod=5" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("druhe")>Zimný šport<i class="fa fa-caret-down"></i></li>
             <li class="opacne druhe"><a href="../Zimne/index.php?prod=1" class="red">Lyže</a></li>
             <li class="opacne druhe"><a href="../Zimne/index.php?prod=2" class="red">Snowboardy</a></li>
@@ -55,13 +55,13 @@ $_SERVER['DOCUMENT_ROOT'] = "index.php";
             <li class="opacne druhe"><a href="../Zimne/index.php?prod=5" class="red">Príslušenstvo</a></li>
             <li class="opacne druhe"><a href="../Zimne/index.php?prod=6" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("tretie")>Doplnky<i class="fa fa-caret-down"></i></li>
-            <li class="opacne tretie"><a href="../Doplnky/index.php" class="red">Cyklodoplnky</a></li>
-            <li class="opacne tretie"><a href="../Doplnky/index.php" class="red">Cyklovýbava</a></li>
-            <li class="opacne tretie"><a href="../Doplnky/index.php" class="red">Lyžiarky</a></li>
-            <li class="opacne tretie"><a href="../Doplnky/index.php" class="red">Viazania</a></li>
-            <li class="opacne tretie"><a href="../Doplnky/index.php" class="red">Palice</a></li>
-            <li class="opacne tretie"><a href="../Doplnky/index.php" class="red">Letné doplnky</a></li>
-            <li class="opacne tretie"><a href="../Doplnky/index.php" class="red">Zimné doplnky</a></li>
+            <li class="opacne tretie"><a href="index.php" class="red">Cyklodoplnky</a></li>
+            <li class="opacne tretie"><a href="index.php" class="red">Cyklovýbava</a></li>
+            <li class="opacne tretie"><a href="index.php" class="red">Lyžiarky</a></li>
+            <li class="opacne tretie"><a href="index.php" class="red">Viazania</a></li>
+            <li class="opacne tretie"><a href="index.php" class="red">Palice</a></li>
+            <li class="opacne tretie"><a href="index.php" class="red">Letné doplnky</a></li>
+            <li class="opacne tretie"><a href="index.php" class="red">Zimné doplnky</a></li>
         </ul>
         <?php if (isset($_SESSION['name'])) { ?>
             <br>
@@ -83,71 +83,10 @@ $_SERVER['DOCUMENT_ROOT'] = "index.php";
 
     <div class="col-6 col-s-8">
         <div class="main" id="hlav">
-            <h1>Letný šport</h1>
-            <li class="sortovace" onclick=utriedNazov("hlav")>Utrieď podľa názvu</li>
-            <li class="sortovace" onclick=utriedCena("hlav")>Utrieď podľa ceny</li>
-            <li class="sortovace" onclick=utriedPocet("hlav")>Utrieď podľa počtu produktov na sklade</li>
             <br>
-            <input class="cierna vyhladaj" type="text" id="filtrovanie" onkeyup="filterList()" placeholder="Vyhľadaj produkt.." title="Type in a name">
-            <?php
-            $url = $_SERVER['REQUEST_URI'];
-            $array = explode('=', $url);
-            $end = end($array);
-            $pocet = 0;
-            $sql = "SELECT MIN(id_produktu) as total FROM produkty";
-            $stmt = $conn->query($sql);
-            $string = $stmt->fetch_assoc();
-            $min = (int)$string['total'];
-            $sql = "SELECT MAX(id_produktu) as total FROM produkty";
-            $stmt = $conn->query($sql);
-            $string = $stmt->fetch_assoc();
-            $max = (int)$string['total'];
-            for ($i = $min; $i < $max+1; $i++) {
-                $sql = "SELECT * FROM produkty WHERE id_produktu = '$i'";
-                $stmt = $conn->query($sql);
-                $string = $stmt->fetch_assoc();
-                if (!is_null($string)) {
-                    if ($string['typ'] == 'L' && ($string['kategoria'] == $end || strlen($end) > 3)) {
-                    $pocet++;
-                    ?>
-                    <a href="../produkt.php?sku=<?=$i?>" class="horne">
-                        <div class="w3-col">
-                            <div class="w3-card-4 w3-margin w3-white">
-                                <?php $obraz = $string['obrazok']; ?>
-                                <img src="../files/<?=$obraz?>" alt="Nature" class="produkt-obr">
-                                <div class="w3-container">
-                                    <?php $meno = $string['nazov']; ?>
-                                    <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
-                                    <?php $pocetK = $string['pocet_kusov']; ?>
-                                    <h4>Pocet kusov na sklade: <span class="w3-opacity pocetTr"><?=$pocetK?></span></h4>
-                                    <?php $cena = $string['cena']; ?>
-                                    <h4>Cena: <span class="w3-opacity cenaTr"><?=$cena?> €</span></h4>
-                                    <p><button><b>Pozrieť produkt</b></button></p>
-                                    <?php if (isset($_SESSION['name'])) { ?>
-                                        <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                                            <form method='post' class="zadnyForm">
-                                                <p><button class="cervena" name="idcko" value='<?=$i?>'><b>Upraviť produkt</b></button></p>
-                                            </form>
-                                        <?php } ?>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                <?php } ?>
-                <?php if ($pocet == 3) {
-                    $pocet = 0;
-                } ?>
-                <?php } ?>
-            <?php } ?>
-            <?php while ($pocet < 3) { ?>
-                <div class="w3-col" style="height: 570px">
-                </div>
-                <?php $pocet++; ?>
-            <?php } ?>
-
-            <hr>
-
+            <div class="container">
+                <h2 class="cierna">Stránka vo výstavbe</h2>
+            </div>
         </div>
     </div>
 

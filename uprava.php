@@ -61,12 +61,20 @@ if(!isset($_SESSION['name'])){
             <li class="opacne tretie">Zimné doplnky</li>
         </ul>
         <?php if (isset($_SESSION['name'])) { ?>
-            <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                <br>
-                <ul>
+            <br>
+            <ul>
+                <li class="hlavne"><a href="kosik.php">Pozrieť košík</a></li>
+                <li class="hlavne"><a href="mojeObjednavky.php">Pozrieť moje objednávky</a></li>
+                <?php if ($_SESSION['name'] == 'admin@admin') { ?>
                     <li class="hlavne"><a href="pridaj.php">Pridaj produkt</a></li>
-                </ul>
-            <?php } ?>
+                <?php } ?>
+            </ul>
+        <?php } else { ?>
+            <br>
+            <ul>
+                <li class="hlavne"><a href="prihlasenie.php">Prihlásiť sa</a></li>
+                <li class="hlavne"><a href="registracia.php">Registrovať</a></li>
+            </ul>
         <?php } ?>
     </div>
 

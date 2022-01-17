@@ -133,7 +133,7 @@ class AuthController
                 Auth::badLoggin2($name);
             }
         } else {
-            Auth::badLoggin($name);
+            Auth::badLoggin2($name);
         }
     }
     public function pridanieproduktu($meno)

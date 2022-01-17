@@ -21,10 +21,16 @@ if(isset($_SESSION['name'])){
     <title>Obchod so športovými potrebami bikeski.sk | Všetky produkty</title>
     <script src="javaskripty.js"></script>
     <script>
+        var prih = true;
+        <?php if(Auth::isBadLoggin()) { ?>
+        prih = true;
+        <?php unset($_SESSION['bad']); ?>
+        <?php } else { ?>
+        prih = false;
+        <?php } ?>
         window.onload = function () {
-            vytvorPrihlasenie();
+            vytvorPrihlasenie(prih);
         }
-        skry();
     </script>
 </head>
 <body>

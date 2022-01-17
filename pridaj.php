@@ -39,34 +39,42 @@ if(!isset($_SESSION['name'])){
         <ul>
             <li class="hlavne"><a href="index.php">Hlavná stránka</a></li>
             <li class="hlavne" onclick=dropdownSide("prve")>Letný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne prve"><a href="Letne/Bicykle.php" class="red">Bicykle</a></li>
-            <li class="opacne prve"><a href="Letne/Kolobezky.html" class="red">Kolobežky</a></li>
-            <li class="opacne prve"><a href="Letne/Korcule.html" class="red">Korčule</a></li>
-            <li class="opacne prve"><a href="Letne/Nahradne.html" class="red">Doplnky</a></li>
-            <li class="opacne prve"><a href="Letne/Doplnky.html" class="red">Príslušenstvo</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=1" class="red">Bicykle</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=2" class="red">Kolobežky</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=3" class="red">Korčule</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=4" class="red">Príslušenstvo</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=5" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("druhe")>Zimný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne druhe">Lyže</li>
-            <li class="opacne druhe">Snowboardy</li>
-            <li class="opacne druhe">Korčule</li>
-            <li class="opacne druhe">Bežky</li>
-            <li class="opacne druhe">Doplnky</li>
-            <li class="opacne druhe">Príslušenstvo</li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=1" class="red">Lyže</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=2" class="red">Snowboardy</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=3" class="red">Korčule</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=4" class="red">Bežky</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=5" class="red">Príslušenstvo</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=6" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("tretie")>Doplnky<i class="fa fa-caret-down"></i></li>
-            <li class="opacne tretie">Cyklodoplnky</li>
-            <li class="opacne tretie">Cyklovýbava</li>
-            <li class="opacne tretie">Lyžiarky</li>
-            <li class="opacne tretie">Viazania</li>
-            <li class="opacne tretie">Palice</li>
-            <li class="opacne tretie">Letné doplnky</li>
-            <li class="opacne tretie">Zimné doplnky</li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Cyklodoplnky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Cyklovýbava</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Lyžiarky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Viazania</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Palice</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Letné doplnky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Zimné doplnky</a></li>
         </ul>
         <?php if (isset($_SESSION['name'])) { ?>
-            <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                <br>
-                <ul>
+            <br>
+            <ul>
+                <li class="hlavne"><a href="kosik.php">Pozrieť košík</a></li>
+                <li class="hlavne"><a href="mojeObjednavky.php">Pozrieť moje objednávky</a></li>
+                <?php if ($_SESSION['name'] == 'admin@admin') { ?>
                     <li class="hlavne"><a href="pridaj.php">Pridaj produkt</a></li>
-                </ul>
-            <?php } ?>
+                <?php } ?>
+            </ul>
+        <?php } else { ?>
+            <br>
+            <ul>
+                <li class="hlavne"><a href="prihlasenie.php">Prihlásiť sa</a></li>
+                <li class="hlavne"><a href="registracia.php">Registrovať</a></li>
+            </ul>
         <?php } ?>
     </div>
 
@@ -100,7 +108,7 @@ if(!isset($_SESSION['name'])){
                     </select>
 
                     <label for="kategoria"><b class="cierna">Kategória</b></label>
-                    <input class="registr" type="number" placeholder="Kategória" name="kategoria" id="kategoria" min="1" max="5" required>
+                    <input class="registr" type="number" placeholder="Kategória" name="kategoria" id="kategoria" min="1" max="6" required>
                     <br>
 
                     <button type="submit">Pridať produkt</button>

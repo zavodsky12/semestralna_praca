@@ -41,26 +41,26 @@ if(isset($_POST['idcko']))
         <ul>
             <li class="hlavne"><a href="index.php">Hlavná stránka</a></li>
             <li class="hlavne" onclick=dropdownSide("prve")>Letný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne prve"><a href="Letne/Bicykle.php" class="red">Bicykle</a></li>
-            <li class="opacne prve"><a href="Letne/Kolobezky.html" class="red">Kolobežky</a></li>
-            <li class="opacne prve"><a href="Letne/Korcule.html" class="red">Korčule</a></li>
-            <li class="opacne prve"><a href="Letne/Doplnky.html" class="red">Príslušenstvo</a></li>
-            <li class="opacne prve"><a href="Letne/Nahradne.html" class="red">Doplnky</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=1" class="red">Bicykle</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=2" class="red">Kolobežky</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=3" class="red">Korčule</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=4" class="red">Príslušenstvo</a></li>
+            <li class="opacne prve"><a href="Letne/index.php?prod=5" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("druhe")>Zimný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne druhe"><a href="Zimne/Lyze.php" class="red">Lyže</a></li>
-            <li class="opacne druhe"><a href="Zimne/Snowboardy.php" class="red">Snowboardy</a></li>
-            <li class="opacne druhe"><a href="Zimne/Korcule.php" class="red">Korčule</a></li>
-            <li class="opacne druhe"><a href="Zimne/Bezky.php" class="red">Bežky</a></li>
-            <li class="opacne druhe"><a href="Zimne/Prislusenstvo.php" class="red">Príslušenstvo</a></li>
-            <li class="opacne druhe"><a href="Zimne/Doplnky.php" class="red">Doplnky</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=1" class="red">Lyže</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=2" class="red">Snowboardy</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=3" class="red">Korčule</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=4" class="red">Bežky</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=5" class="red">Príslušenstvo</a></li>
+            <li class="opacne druhe"><a href="Zimne/index.php?prod=6" class="red">Doplnky</a></li>
             <li class="hlavne" onclick=dropdownSide("tretie")>Doplnky<i class="fa fa-caret-down"></i></li>
-            <li class="opacne tretie"><a href="Doplnky/Cyklodoplnky.php" class="red">Cyklodoplnky</a></li>
-            <li class="opacne tretie"><a href="Doplnky/Cyklovybava.php" class="red">Cyklovýbava</a></li>
-            <li class="opacne tretie"><a href="Doplnky/Lyziarky.php" class="red">Lyžiarky</a></li>
-            <li class="opacne tretie"><a href="Doplnky/Viazania.php" class="red">Viazania</a></li>
-            <li class="opacne tretie"><a href="Doplnky/Palice.php" class="red">Palice</a></li>
-            <li class="opacne tretie"><a href="Doplnky/Letne_doplnky.php" class="red">Letné doplnky</a></li>
-            <li class="opacne tretie"><a href="Doplnky/Zimne_doplnky.php" class="red">Zimné doplnky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Cyklodoplnky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Cyklovýbava</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Lyžiarky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Viazania</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Palice</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Letné doplnky</a></li>
+            <li class="opacne tretie"><a href="Doplnky/index.php" class="red">Zimné doplnky</a></li>
         </ul>
         <?php if (isset($_SESSION['name'])) { ?>
             <br>
