@@ -81,64 +81,64 @@ if(!isset($_SESSION['name'])){
     <div class="col-6 col-s-8">
         <div class="main">
             <h1>Úprava produktu</h1>
-                <div class="container">
-                    <?php
-                    $id = $_SESSION['idcko'];
-                    $sql = "SELECT * FROM produkty WHERE id_produktu = '$id'";
-                    $stmt = $conn->query($sql);
-                    $string = $stmt->fetch_assoc();
-                    ?>
-                    <p class="cierna">Tu môžete upravovať svoj produkt</p>
-                    <hr>
+            <div class="container">
+                <?php
+                $id = $_SESSION['idcko'];
+                $sql = "SELECT * FROM produkty WHERE id_produktu = '$id'";
+                $stmt = $conn->query($sql);
+                $string = $stmt->fetch_assoc();
+                ?>
+                <p class="cierna">Tu môžete upravovať svoj produkt</p>
+                <hr>
 
-                    <img src="files/<?=$string['obrazok']?>" alt="Nature" class="pridanieObr"><br><br>
+                <img src="files/<?=$string['obrazok']?>" alt="Nature" class="pridanieObr"><br><br>
 
-                    <h2 class="cierna">Popis</h2>
-                    <p class="cierna"><?=$string['popis']?></p>
+                <h2 class="cierna">Popis</h2>
+                <p class="cierna"><?=$string['popis']?></p>
 
-                    <form method="post">
-                        <p><label for="uprNazov"><b class="cierna">Názov: <?=$string['nazov']?></b></label></p>
-                        <input class="uprtr" type="text" placeholder="Názov" name="uprNazov" id="uprNazov">
-                        <button type="submit">Zmeniť</button>
-                    </form>
+                <form method="post">
+                    <p><label for="uprNazov"><b class="cierna">Názov: <?=$string['nazov']?></b></label></p>
+                    <input class="uprtr" type="text" placeholder="Názov" name="uprNazov" id="uprNazov">
+                    <button type="submit">Zmeniť</button>
+                </form>
 
-                    <form method="post">
-                        <p><label for="uprCena"><b class="cierna">Cena: <?=$string['cena']?> €</b></label></p>
-                        <input class="uprtr" type="number" placeholder="Cena" name="uprCena" id="uprCena">
-                        <button type="submit">Zmeniť</button>
-                    </form>
+                <form method="post">
+                    <p><label for="uprCena"><b class="cierna">Cena: <?=$string['cena']?> €</b></label></p>
+                    <input class="uprtr" type="number" placeholder="Cena" name="uprCena" id="uprCena">
+                    <button type="submit">Zmeniť</button>
+                </form>
 
-                    <form method="post">
-                        <p><label for="uprPocet"><b class="cierna">Počet kusov: <?=$string['pocet_kusov']?></b></label></p>
-                        <input class="uprtr" type="number" placeholder="Počet kusov" name="uprPocet" id="uprPocet">
-                        <button type="submit">Zmeniť</button>
-                    </form>
+                <form method="post">
+                    <p><label for="uprPocet"><b class="cierna">Počet kusov: <?=$string['pocet_kusov']?></b></label></p>
+                    <input class="uprtr" type="number" placeholder="Počet kusov" name="uprPocet" id="uprPocet">
+                    <button type="submit">Zmeniť</button>
+                </form>
 
-                    <form method="post">
-                        <p><label for="uprPopis"><b class="cierna">Popis:</b></label></p>
-                        <input class="uprtr" type="text" placeholder="Popis" name="uprPopis" id="uprPopis">
-                        <button type="submit">Zmeniť</button>
-                    </form>
+                <form method="post">
+                    <p><label for="uprPopis"><b class="cierna">Popis:</b></label></p>
+                    <input class="uprtr" type="text" placeholder="Popis" name="uprPopis" id="uprPopis">
+                    <button type="submit">Zmeniť</button>
+                </form>
 
-                    <form method="post">
-                        <p><label for="uprTyp"><b class="cierna">Typ: <?=$string['typ']?></b></label></p>
-                        <select class="uprtr" id="uprTyp" name="uprTyp">
-                            <option value="L">L</option>
-                            <option value="Z">Z</option>
-                        </select>
-                        <button type="submit">Zmeniť</button>
-                    </form>
+                <form method="post">
+                    <p><label for="uprTyp"><b class="cierna">Typ: <?=$string['typ']?></b></label></p>
+                    <select class="uprtr" id="uprTyp" name="uprTyp">
+                        <option value="L">L</option>
+                        <option value="Z">Z</option>
+                    </select>
+                    <button type="submit">Zmeniť</button>
+                </form>
 
-                    <form method="post">
-                        <p><label for="uprKategoria"><b class="cierna">Kategória: <?=$string['kategoria']?></b></label></p>
-                        <input class="uprtr" type="number" placeholder="Kategória" name="uprKategoria" id="uprKategoria" min="1" max="5">
-                        <button type="submit">Zmeniť</button>
-                    </form>
+                <form method="post">
+                    <p><label for="uprKategoria"><b class="cierna">Kategória: <?=$string['kategoria']?></b></label></p>
+                    <input class="uprtr" type="number" placeholder="Kategória" name="uprKategoria" id="uprKategoria" min="1" max="5">
+                    <button type="submit">Zmeniť</button>
+                </form>
 
-                    <form method='post'>
-                        <p><button class="cervena" name="zmazProdukt" value='<?=$string['id_produktu']?>'><b>Odstrániť produkt</b></button></p>
-                    </form>
-                </div>
+                <form method='post'>
+                    <p><button class="cervena" name="zmazProdukt" value='<?=$string['id_produktu']?>'><b>Odstrániť produkt</b></button></p>
+                </form>
+            </div>
 
             <hr>
 

@@ -108,36 +108,36 @@ $_SERVER['DOCUMENT_ROOT'] = "index.php";
                 $string = $stmt->fetch_assoc();
                 if (!is_null($string)) {
                     if ($string['typ'] == 'Z' && ($string['kategoria'] == $end || strlen($end) > 3)) {
-                    $pocet++;
-                    ?>
-                    <a href="../produkt.php?sku=<?=$i?>" class="horne">
-                        <div class="w3-col">
-                            <div class="w3-card-4 w3-margin w3-white">
-                                <?php $obraz = $string['obrazok']; ?>
-                                <img src="../files/<?=$obraz?>" alt="Nature" class="produkt-obr">
-                                <div class="w3-container">
-                                    <?php $meno = $string['nazov']; ?>
-                                    <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
-                                    <?php $pocetK = $string['pocet_kusov']; ?>
-                                    <h4>Pocet kusov na sklade: <span class="w3-opacity pocetTr"><?=$pocetK?></span></h4>
-                                    <?php $cena = $string['cena']; ?>
-                                    <h4>Cena: <span class="w3-opacity cenaTr"><?=$cena?> €</span></h4>
-                                    <p><button><b>Pozrieť produkt</b></button></p>
-                                    <?php if (isset($_SESSION['name'])) { ?>
-                                        <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                                            <form method='post' class="zadnyForm">
-                                                <p><button class="cervena" name="idcko" value='<?=$i?>'><b>Upraviť produkt</b></button></p>
-                                            </form>
+                        $pocet++;
+                        ?>
+                        <a href="../produkt.php?sku=<?=$i?>" class="horne">
+                            <div class="w3-col">
+                                <div class="w3-card-4 w3-margin w3-white">
+                                    <?php $obraz = $string['obrazok']; ?>
+                                    <img src="../files/<?=$obraz?>" alt="Nature" class="produkt-obr">
+                                    <div class="w3-container">
+                                        <?php $meno = $string['nazov']; ?>
+                                        <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
+                                        <?php $pocetK = $string['pocet_kusov']; ?>
+                                        <h4>Pocet kusov na sklade: <span class="w3-opacity pocetTr"><?=$pocetK?></span></h4>
+                                        <?php $cena = $string['cena']; ?>
+                                        <h4>Cena: <span class="w3-opacity cenaTr"><?=$cena?> €</span></h4>
+                                        <p><button><b>Pozrieť produkt</b></button></p>
+                                        <?php if (isset($_SESSION['name'])) { ?>
+                                            <?php if ($_SESSION['name'] == 'admin@admin') { ?>
+                                                <form method='post' class="zadnyForm">
+                                                    <p><button class="cervena" name="idcko" value='<?=$i?>'><b>Upraviť produkt</b></button></p>
+                                                </form>
+                                            <?php } ?>
                                         <?php } ?>
-                                    <?php } ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                <?php } ?>
-                <?php if ($pocet == 3) {
-                    $pocet = 0;
-                } ?>
+                        </a>
+                    <?php } ?>
+                    <?php if ($pocet == 3) {
+                        $pocet = 0;
+                    } ?>
                 <?php } ?>
             <?php } ?>
             <?php while ($pocet < 3) { ?>

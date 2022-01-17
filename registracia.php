@@ -110,9 +110,9 @@ $conn = mysqli_connect("localhost","root","","databaza2");
                 <?php }?>
 
                 <?php if(!Auth::isLogged()) { ?>
-                <div class="container">
-                    <p class="cierna">Už u nás máte účet? <a href="prihlasenie.php" class="modre">Prihláste sa</a>.</p>
-                </div>
+                    <div class="container">
+                        <p class="cierna">Už u nás máte účet? <a href="prihlasenie.php" class="modre">Prihláste sa</a>.</p>
+                    </div>
                 <?php }?>
             </form>
 

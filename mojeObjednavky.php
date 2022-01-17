@@ -132,41 +132,41 @@ if(!isset($_SESSION['name'])){
                     $stmt = $conn->query($sql);
                     $string = $stmt->fetch_assoc();
                     ?>
-                <?php if (!is_null($string)) { ?>
-                    <hr>
-                    <table>
-                        <tr>
-                            <th>Názov produktu</th>
-                            <th>Č. obj</th>
-                            <th>Počet kusov</th>
-                            <th>Celková cena</th>
-                            <th>Doručenie</th>
-                            <th>Platba</th>
-                        </tr>
-                        <?php for ($i = $min; $i < $max+1; $i++) {
-                            $sql = "SELECT id_nakupu, obrazok, hotove_objednavky.pocet_kusov as pocet_kusov, nazov, cena, dorucenie, platba FROM hotove_objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
-                            $stmt = $conn->query($sql);
-                            $string = $stmt->fetch_assoc();
-                            if (!is_null($string)) { ?>
+                    <?php if (!is_null($string)) { ?>
+                        <hr>
+                        <table>
+                            <tr>
+                                <th>Názov produktu</th>
+                                <th>Č. obj</th>
+                                <th>Počet kusov</th>
+                                <th>Celková cena</th>
+                                <th>Doručenie</th>
+                                <th>Platba</th>
+                            </tr>
+                            <?php for ($i = $min; $i < $max+1; $i++) {
+                                $sql = "SELECT objednavka_cislo, obrazok, hotove_objednavky.pocet_kusov as pocet_kusov, nazov, cena, dorucenie, platba FROM hotove_objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
+                                $stmt = $conn->query($sql);
+                                $string = $stmt->fetch_assoc();
+                                if (!is_null($string)) { ?>
 
-                                <tr>
-                                    <td><img src="files/<?=$string['obrazok']?>" alt="Nature" class="objednany-obr"><?=$string['nazov']?></td>
-                                    <td><?=$string['id_nakupu']?></td>
-                                    <td><?=$string['pocet_kusov']?></td>
-                                    <td><?=$string['cena'] * $string['pocet_kusov']?> €</td>
-                                    <td><?=$string['dorucenie']?></td>
-                                    <td><?=$string['platba']?></td>
-                                </tr>
+                                    <tr>
+                                        <td><img src="files/<?=$string['obrazok']?>" alt="Nature" class="objednany-obr"><?=$string['nazov']?></td>
+                                        <td><?=$string['objednavka_cislo']?></td>
+                                        <td><?=$string['pocet_kusov']?></td>
+                                        <td><?=$string['cena'] * $string['pocet_kusov']?> €</td>
+                                        <td><?=$string['dorucenie']?></td>
+                                        <td><?=$string['platba']?></td>
+                                    </tr>
 
+                                <?php } ?>
                             <?php } ?>
-                        <?php } ?>
-                    </table>
+                        </table>
 
-                <?php } else { ?>
-                    <div class="container">
-                        <h2 class="cierna">Nemáte žiadne objednanávky</h2>
-                    </div>
-                <?php } ?>
+                    <?php } else { ?>
+                        <div class="container">
+                            <h2 class="cierna">Nemáte žiadne objednanávky</h2>
+                        </div>
+                    <?php } ?>
                 <?php } ?>
             </div>
 

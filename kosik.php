@@ -77,68 +77,68 @@ if(!isset($_SESSION['name'])){
     <div class="col-6 col-s-8">
         <div class="main">
             <h1>Váš košík</h1>
-        <?php
-        $sql = "SELECT MIN(id_nakupu) as total FROM objednavky";
-        $stmt = $conn->query($sql);
-        $string = $stmt->fetch_assoc();
-        $min = (int)$string['total'];
-        $sql = "SELECT MAX(id_nakupu) as total FROM objednavky";
-        $stmt = $conn->query($sql);
-        $string = $stmt->fetch_assoc();
-        $max = (int)$string['total'];
-        $userN = $_SESSION['name'];
-        $sql = "SELECT id_nakupu as total FROM objednavky JOIN pouzivatelia USING(id_pouzivatela) WHERE email LIKE '$userN'";
-        $stmt = $conn->query($sql);
-        $string = $stmt->fetch_assoc();
-        if (!is_null($string)) {
-        for ($i = $min; $i < $max+1; $i++) {
-            $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
+            <?php
+            $sql = "SELECT MIN(id_nakupu) as total FROM objednavky";
             $stmt = $conn->query($sql);
             $string = $stmt->fetch_assoc();
-            if (!is_null($string)) { ?>
+            $min = (int)$string['total'];
+            $sql = "SELECT MAX(id_nakupu) as total FROM objednavky";
+            $stmt = $conn->query($sql);
+            $string = $stmt->fetch_assoc();
+            $max = (int)$string['total'];
+            $userN = $_SESSION['name'];
+            $sql = "SELECT id_nakupu as total FROM objednavky JOIN pouzivatelia USING(id_pouzivatela) WHERE email LIKE '$userN'";
+            $stmt = $conn->query($sql);
+            $string = $stmt->fetch_assoc();
+            if (!is_null($string)) {
+                for ($i = $min; $i < $max+1; $i++) {
+                    $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
+                    $stmt = $conn->query($sql);
+                    $string = $stmt->fetch_assoc();
+                    if (!is_null($string)) { ?>
 
-            <div class="container">
-                <hr>
+                        <div class="container">
+                            <hr>
 
-                <img src="files/<?=$string['obrazok']?>" alt="Nature" class="kosik-obr">
-                <table>
-                    <tr>
-                        <th>Názov:</th>
-                        <td><?=$string['nazov']?></td>
-                    </tr>
-                    <tr>
-                        <th>Celková cena:</th>
-                        <td><?=$string['cena'] * $string['pocet_kusov']?> €</td>
-                    </tr>
-                    <tr>
-                        <th>Počet kusov:</th>
-                        <td><?=$string['pocet_kusov']?></td>
-                    </tr>
-                </table>
-                <br>
-                <form method='post' style="padding: 0px">
-                    <p><label for="uprMnozstvo"><b class="cierna">Zvoľte množstvo produktov:</b></label></p>
-                    <input class="uprtr" type="number" placeholder="Množstvo" name="uprMnozstvo" id="uprMnozstvo">
-                    <input class="uprtr" type="hidden" name="uprMnPoct" value="<?=$i?>">
-                    <button type="submit"><b>Upraviť produkt</b></button>
-                </form>
-                <form method='post' style="padding: 0px">
-                    <p><button class="cervena" name="zmazKosik" value='<?=$i?>'><b>Odstrániť produkt</b></button></p>
-                </form>
+                            <img src="files/<?=$string['obrazok']?>" alt="Nature" class="kosik-obr">
+                            <table>
+                                <tr>
+                                    <th>Názov:</th>
+                                    <td><?=$string['nazov']?></td>
+                                </tr>
+                                <tr>
+                                    <th>Celková cena:</th>
+                                    <td><?=$string['cena'] * $string['pocet_kusov']?> €</td>
+                                </tr>
+                                <tr>
+                                    <th>Počet kusov:</th>
+                                    <td><?=$string['pocet_kusov']?></td>
+                                </tr>
+                            </table>
+                            <br>
+                            <form method='post' style="padding: 0px">
+                                <p><label for="uprMnozstvo"><b class="cierna">Zvoľte množstvo produktov:</b></label></p>
+                                <input class="uprtr" type="number" placeholder="Množstvo" name="uprMnozstvo" id="uprMnozstvo">
+                                <input class="uprtr" type="hidden" name="uprMnPoct" value="<?=$i?>">
+                                <button type="submit"><b>Upraviť produkt</b></button>
+                            </form>
+                            <form method='post' style="padding: 0px">
+                                <p><button class="cervena" name="zmazKosik" value='<?=$i?>'><b>Odstrániť produkt</b></button></p>
+                            </form>
 
-            </div>
-                <br>
+                        </div>
+                        <br>
 
+                    <?php } ?>
+                <?php } ?>
+                <div class="platba">
+                    <p class="kosikPlatba"><button><a href="platba.php"><b>Prejsť k platbe</b></a></button></p>
+                </div>
+            <?php } else { ?>
+                <div class="container">
+                    <h2 class="cierna">V košíku nemáte žiadne produkty</h2>
+                </div>
             <?php } ?>
-        <?php } ?>
-            <div class="platba">
-                <p class="kosikPlatba"><button><a href="platba.php"><b>Prejsť k platbe</b></a></button></p>
-            </div>
-        <?php } else { ?>
-            <div class="container">
-                <h2 class="cierna">V košíku nemáte žiadne produkty</h2>
-            </div>
-        <?php } ?>
 
             <hr>
         </div>

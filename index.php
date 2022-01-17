@@ -67,9 +67,9 @@ if(isset($_POST['idcko']))
             <ul>
                 <li class="hlavne"><a href="kosik.php">Pozrieť košík</a></li>
                 <li class="hlavne"><a href="mojeObjednavky.php">Pozrieť moje objednávky</a></li>
-            <?php if ($_SESSION['name'] == 'admin@admin') { ?>
+                <?php if ($_SESSION['name'] == 'admin@admin') { ?>
                     <li class="hlavne"><a href="pridaj.php">Pridaj produkt</a></li>
-            <?php } ?>
+                <?php } ?>
             </ul>
         <?php } else { ?>
             <br>
@@ -83,43 +83,6 @@ if(isset($_POST['idcko']))
     <div class="col-6 col-s-8">
         <div class="main" id="hlav">
             <h1>Všetky produkty</h1>
-            <div class="slideshow-container">
-                <h2 class="cierna", style="padding: 10px; background-color: #bbb; text-align: center">Kliknutím zobrazíte produkt</h2>
-                <div class="mySlides">
-                    <a href="produkt.php?sku=6"><img src="files/2022-01-11-17-03-27_horsky-bicykel.jpg" alt="Nature" class="slider-obr"></a>
-<!--                    <h2>Bicykel na dlhe jazdy</h2>-->
-                </div>
-
-                <div class="mySlides">
-                    <a href="produkt.php?sku=2"><img src="files/lyze.jpg" alt="Nature" class="slider-obr"></a>
-<!--                    <h2>Lyze na zimu</h2>-->
-                </div>
-
-                <div class="mySlides">
-                    <a href="produkt.php?sku=8"><img src="files/snowboard-jones.jpg" alt="Nature" class="slider-obr"></a>
-<!--                    <h2>Snowboard Jones</h2>-->
-                </div>
-
-                <div class="mySlides">
-                    <a href="produkt.php?sku=10"><img src="files/2022-01-15-17-22-53_Elektrická-kolobežka-inSPORTline-Voltero.jpg" alt="Nature" class="slider-obr"></a>
-<!--                    <h3>Elektricka kolobezka inSPORTline</h3>-->
-                </div>
-
-                <a class="prev" onclick="plusSlides(-1)">❮</a>
-                <a class="next" onclick="plusSlides(1)">❯</a>
-
-            </div>
-            <div class="dot-container" style="text-align: center">
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
-                <span class="dot" onclick="currentSlide(4)"></span>
-            </div>
-            <script>
-                showSlides(4);
-                posuvaj();
-            </script>
-            <br>
             <li class="sortovace" onclick=utriedNazov("hlav")>Utrieď podľa názvu</li>
             <li class="sortovace" onclick=utriedCena("hlav")>Utrieď podľa ceny</li>
             <li class="sortovace" onclick=utriedPocet("hlav")>Utrieď podľa počtu produktov na sklade</li>
@@ -142,39 +105,39 @@ if(isset($_POST['idcko']))
                 if (!is_null($string)) {
                     $pocet++;
                     ?>
-                        <a href="produkt.php?sku=<?=$i?>" class="horne">
+                    <a href="produkt.php?sku=<?=$i?>" class="horne">
                         <div class="w3-col">
-                        <div class="w3-card-4 w3-margin w3-white">
-                            <?php $obraz = $string['obrazok']; ?>
-                            <img src="files/<?=$obraz?>" alt="Nature" class="produkt-obr">
-                            <div class="w3-container">
-                                <?php $meno = $string['nazov']; ?>
-                                <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
-                                <?php $pocetK = $string['pocet_kusov']; ?>
-                                <h4>Pocet kusov na sklade: <span class="w3-opacity pocetTr"><?=$pocetK?></span></h4>
-                                <?php $cena = $string['cena']; ?>
-                                <h4>Cena: <span class="w3-opacity cenaTr"><?=$cena?> €</span></h4>
-                                <p><button><b>Pozrieť produkt</b></button></p>
-                                <?php if (isset($_SESSION['name'])) { ?>
-                                    <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                                        <form method='post' class="zadnyForm">
-                                            <p><button class="cervena" name="idcko" value='<?=$i?>'><b>Upraviť produkt</b></button></p>
-                                        </form>
+                            <div class="w3-card-4 w3-margin w3-white">
+                                <?php $obraz = $string['obrazok']; ?>
+                                <img src="files/<?=$obraz?>" alt="Nature" class="produkt-obr">
+                                <div class="w3-container">
+                                    <?php $meno = $string['nazov']; ?>
+                                    <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
+                                    <?php $pocetK = $string['pocet_kusov']; ?>
+                                    <h4>Pocet kusov na sklade: <span class="w3-opacity pocetTr"><?=$pocetK?></span></h4>
+                                    <?php $cena = $string['cena']; ?>
+                                    <h4>Cena: <span class="w3-opacity cenaTr"><?=$cena?> €</span></h4>
+                                    <p><button><b>Pozrieť produkt</b></button></p>
+                                    <?php if (isset($_SESSION['name'])) { ?>
+                                        <?php if ($_SESSION['name'] == 'admin@admin') { ?>
+                                            <form method='post' class="zadnyForm">
+                                                <p><button class="cervena" name="idcko" value='<?=$i?>'><b>Upraviť produkt</b></button></p>
+                                            </form>
+                                        <?php } ?>
                                     <?php } ?>
-                                <?php } ?>
+                                </div>
                             </div>
                         </div>
-                        </div>
-                        </a>
+                    </a>
                 <?php } ?>
                 <?php if ($pocet == 3) {
                     $pocet = 0;
                 } ?>
             <?php } ?>
             <?php while ($pocet < 3) { ?>
-            <div class="w3-col" style="height: 570px">
-            </div>
-            <?php $pocet++; ?>
+                <div class="w3-col" style="height: 570px">
+                </div>
+                <?php $pocet++; ?>
             <?php } ?>
 
             <hr>
@@ -210,29 +173,29 @@ if(isset($_POST['idcko']))
         <?php if(Auth::isLogged()) { ?>
             <div class="kosik">
                 <h2>Váš košík</h2>
-                    <?php
-                    $sql = "SELECT MIN(id_nakupu) as total FROM objednavky";
+                <?php
+                $sql = "SELECT MIN(id_nakupu) as total FROM objednavky";
+                $stmt = $conn->query($sql);
+                $string = $stmt->fetch_assoc();
+                $min = (int)$string['total'];
+                $sql = "SELECT MAX(id_nakupu) as total FROM objednavky";
+                $stmt = $conn->query($sql);
+                $string = $stmt->fetch_assoc();
+                $max = (int)$string['total'];
+                $userN = $_SESSION['name'];
+                for ($i = $min; $i < $max+1; $i++) {
+                    $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
                     $stmt = $conn->query($sql);
                     $string = $stmt->fetch_assoc();
-                    $min = (int)$string['total'];
-                    $sql = "SELECT MAX(id_nakupu) as total FROM objednavky";
-                    $stmt = $conn->query($sql);
-                    $string = $stmt->fetch_assoc();
-                    $max = (int)$string['total'];
-                    $userN = $_SESSION['name'];
-                    for ($i = $min; $i < $max+1; $i++) {
-                        $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
-                        $stmt = $conn->query($sql);
-                        $string = $stmt->fetch_assoc();
-                        if (!is_null($string)) { ?>
-                            <div class="right">
-                                <p class="cierna"><b>Názov:</b> <?=$string['nazov']?></p>
-                                <p class="cierna"><b>Počet kosov:</b> <?=$string['pocet_kusov']?></p>
-                                <p class="cierna"><b>Celková cena:</b> <?=$string['cena'] * $string['pocet_kusov']?> €</p>
-                            </div>
-                            <br>
-                        <?php } ?>
+                    if (!is_null($string)) { ?>
+                        <div class="right">
+                            <p class="cierna"><b>Názov:</b> <?=$string['nazov']?></p>
+                            <p class="cierna"><b>Počet kosov:</b> <?=$string['pocet_kusov']?></p>
+                            <p class="cierna"><b>Celková cena:</b> <?=$string['cena'] * $string['pocet_kusov']?> €</p>
+                        </div>
+                        <br>
                     <?php } ?>
+                <?php } ?>
                 <button><b><a href="kosik.php">Pozrieť košík</a></b></button>
             </div>
         <?php } else { ?>

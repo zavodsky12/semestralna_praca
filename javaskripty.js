@@ -1,12 +1,12 @@
 function dropdownSide(idcko) {
-    var divsToHide = document.getElementsByClassName(idcko); //divsToHide is an array
+    var divsToHide = document.getElementsByClassName(idcko);
     if (divsToHide[0].style.display === "block") {
         for (var i = 0; i < divsToHide.length; i++) {
-            divsToHide[i].style.display = "none"; // depending on what you're doing
+            divsToHide[i].style.display = "none";
         }
     } else {
         for (var i = 0; i < divsToHide.length; i++) {
-            divsToHide[i].style.display = "block"; // depending on what you're doing
+            divsToHide[i].style.display = "block";
         }
     }
 }
@@ -87,62 +87,19 @@ function vymenaCislo(triedene, podla) {
     }
 }
 function filterList() {
-    var input, filter, hlavny, horny, a, i, txtValue;
+    var input, hlavny, horny, a, i, txtValue;
     input = document.getElementById("filtrovanie");
-    filter = input.value.toUpperCase();
     hlavny = document.getElementById("hlav");
     horny = hlavny.getElementsByClassName("horne");
     for (i = 0; i < horny.length; i++) {
         a = horny[i].getElementsByTagName("h3")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        txtValue = a.innerText;
+        if (txtValue.toUpperCase().includes(input.value.toUpperCase())) {
             horny[i].style.display = "";
         } else {
             horny[i].style.display = "none";
         }
     }
-}
-var slideIndex = 4;
-// showSlides(slideIndex);
-
-function plusSlides(n) {
-    showSlides(slideIndex += n);
-}
-
-function currentSlide(n) {
-    showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    var dots = document.getElementsByClassName("dot");
-    if (n > slides.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = slides.length}
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex-1].style.display = "block";
-    dots[slideIndex-1].className += " active";
-}
-function posuvaj() {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    var dots = document.getElementsByClassName("dot");
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    slideIndex++;
-    if (slideIndex > slides.length) {slideIndex = 1}
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex-1].style.display = "block";
-    dots[slideIndex-1].className += " active";
-    setTimeout(posuvaj, 8000); // Change image every 2 seconds
 }
 function vytvorPrihlasenie(prih) {
     var htmlElement = document.getElementById('stranka');

@@ -128,8 +128,6 @@ if(!isset($_SESSION['name'])){
     </div>
 </div>
 
-</div>
-
 <div>
     <div class="col-3">
 
