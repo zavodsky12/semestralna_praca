@@ -91,46 +91,61 @@ if(!isset($_SESSION['name'])){
             $stmt = $conn->query($sql);
             $string = $stmt->fetch_assoc();
             if (!is_null($string)) {
-                for ($i = $min; $i < $max+1; $i++) {
-                    $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, produkty.pocet_kusov as pocet_kusovv, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
-                    $stmt = $conn->query($sql);
-                    $string = $stmt->fetch_assoc();
-                    if (!is_null($string)) { ?>
+            for ($i = $min; $i < $max+1; $i++) {
+                $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, produkty.pocet_kusov as pocet_kusovv, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
+                $stmt = $conn->query($sql);
+                $string = $stmt->fetch_assoc();
+            if (!is_null($string)) { ?>
 
-                        <div class="container">
-                            <hr>
+                <div class="container">
+                    <hr>
 
-                            <img src="files/<?=$string['obrazok']?>" alt="Nature" class="kosik-obr">
-                            <table>
-                                <tr>
-                                    <th>Názov:</th>
-                                    <td><?=$string['nazov']?></td>
-                                </tr>
-                                <tr>
-                                    <th>Celková cena:</th>
-                                    <td><?=$string['cena'] * $string['pocet_kusov']?> €</td>
-                                </tr>
-                                <tr>
-                                    <th>Počet kusov:</th>
-                                    <td><?=$string['pocet_kusov']?></td>
-                                </tr>
-                            </table>
-                            <br>
-                            <form method='post' style="padding: 0px">
-                                <p><label for="uprMnozstvo"><b class="cierna">Zvoľte množstvo produktov:</b></label></p>
-                                <input class="uprtr" type="number" placeholder="Množstvo" name="uprMnozstvo" id="uprMnozstvo" min="1" max="<?=$string['pocet_kusovv']?>">
-                                <input class="uprtr" type="hidden" name="uprMnPoct" value="<?=$i?>">
-                                <button type="submit"><b>Upraviť produkt</b></button>
-                            </form>
-                            <form method='post' style="padding: 0px">
-                                <p><button class="cervena" name="zmazKosik" value='<?=$i?>'><b>Odstrániť produkt</b></button></p>
-                            </form>
+                    <img src="files/<?=$string['obrazok']?>" alt="Nature" class="kosik-obr">
+                    <div id="produkt<?=$i?>">
+                        <table>
+                            <tr>
+                                <th>Názov:</th>
+                                <td><?=$string['nazov']?></td>
+                            </tr>
+                            <tr>
+                                <th>Celková cena:</th>
+                                <td><?=$string['cena'] * $string['pocet_kusov']?> €</td>
+                            </tr>
+                            <tr>
+                                <th>Počet kusov:</th>
+                                <td><?=$string['pocet_kusov']?></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <p><label for="uprMnozstvo<?=$i?>"><b class="cierna">Zvoľte množstvo produktov:</b></label></p>
+                    <input class="uprtr" type="number" placeholder="Množstvo" name="uprMnozstvo<?=$i?>" id="uprMnozstvo<?=$i?>" min="1" max="<?=$string['pocet_kusovv']?>" onkeyup="zmenData<?=$i?>()">
+                    <input class="uprtr" type="hidden" placeholder="Množstvo" name="uprMnozstvo<?=$i?>" id="uprMnozstv<?=$i?>" value="<?=$i?>">
+                    <form method='post' style="padding: 0px">
+                        <p><button class="cervena" name="zmazKosik" value='<?=$i?>'><b>Odstrániť produkt</b></button></p>
+                    </form>
+                </div>
+            <br>
+                <script>
+                    function zmenData<?=$i?>() {
+                        var xhttp;
+                        var str = document.getElementById("uprMnozstvo<?=$i?>").value;
+                        if (str <= 0 || str > <?=$string['pocet_kusovv']?>) {
 
-                        </div>
-                        <br>
-
-                    <?php } ?>
-                <?php } ?>
+                        } else {
+                            xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    document.getElementById("produkt<?=$i?>").innerHTML = this.responseText;
+                                }
+                            };
+                            xhttp.open("GET", "tabtab.php?q=" + <?=$i?> + "=" + str, true);
+                            xhttp.send();
+                        }
+                    }
+                </script>
+            <?php } ?>
+            <?php } ?>
                 <div class="platba">
                     <p class="kosikPlatba"><button><a href="platba.php"><b>Prejsť k platbe</b></a></button></p>
                 </div>

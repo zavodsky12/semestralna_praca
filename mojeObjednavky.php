@@ -94,35 +94,50 @@ if(!isset($_SESSION['name'])){
                 if ($_SESSION['name'] == 'admin@admin') { ?>
                     <?php if (!is_null($string)) { ?>
                         <hr>
-                        <table>
-                            <tr>
-                                <th>Názov produktu</th>
-                                <th>Počet kusov</th>
-                                <th>Č. obj</th>
-                                <th>Celková cena</th>
-                                <th>Doručenie</th>
-                                <th>Platba</th>
-                                <th>Objednávateľ</th>
-                            </tr>
-                            <?php for ($i = $min; $i < $max+1; $i++) {
-                                $sql = "SELECT objednavka_cislo, obrazok, hotove_objednavky.pocet_kusov as pocet_kusov, nazov, cena, dorucenie, platba, email FROM hotove_objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i'";
+                        <form action="">
+                            <select name="customers" onchange="vypisObjednavkyy(this.value)" class="vyber">
+                                <option value="">Vyberte zo zoznamu</option>
+                                <?php
+                                $sql = "SELECT MIN(id_pouzivatela) as total FROM pouzivatelia";
                                 $stmt = $conn->query($sql);
-                                $string = $stmt->fetch_assoc();
-                                if (!is_null($string)) { ?>
-
-                                    <tr>
-                                        <td><img src="files/<?=$string['obrazok']?>" alt="Nature" class="objednany-obr"><?=$string['nazov']?></td>
-                                        <td><?=$string['pocet_kusov']?></td>
-                                        <td><?=$string['objednavka_cislo']?></td>
-                                        <td><?=$string['cena'] * $string['pocet_kusov']?> €</td>
-                                        <td><?=$string['dorucenie']?></td>
-                                        <td><?=$string['platba']?></td>
-                                        <td><?=$string['email']?></td>
-                                    </tr>
-
+                                $strin = $stmt->fetch_assoc();
+                                $mi = (int)$strin['total'];
+                                $sql = "SELECT MAX(id_pouzivatela) as total FROM pouzivatelia";
+                                $stmt = $conn->query($sql);
+                                $strin = $stmt->fetch_assoc();
+                                $ma = (int)$strin['total'];
+                                for ($i = $mi; $i < $ma+1; $i++) {
+                                    $sql = "SELECT * FROM pouzivatelia WHERE id_pouzivatela = '$i'";
+                                    $stmt = $conn->query($sql);
+                                    $strin = $stmt->fetch_assoc();
+                                    $em = $strin['email'];
+                                    $idp = $strin['id_pouzivatela'];
+                                    if (!is_null($strin)) {
+                                        ?>
+                                        <option value="<?=$idp?>"><?=$em?></option>
+                                    <?php } ?>
                                 <?php } ?>
-                            <?php } ?>
-                        </table>
+                            </select>
+                        </form>
+                        <br>
+                    <div id="vypisObjednavky"></div>
+                    <script>
+                        function vypisObjednavkyy(str) {
+                            var xhttp;
+                            if (str == "") {
+                                document.getElementById("vypisObjednavky").innerHTML = "";
+                                return;
+                            }
+                            xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function() {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    document.getElementById("vypisObjednavky").innerHTML = this.responseText;
+                                }
+                            };
+                            xhttp.open("GET", "objobj.php?q="+str, true);
+                            xhttp.send();
+                        }
+                    </script>
 
                     <?php } else { ?>
                         <div class="container">

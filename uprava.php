@@ -104,13 +104,13 @@ if(!isset($_SESSION['name'])){
 
                 <form method="post">
                     <p><label for="uprCena"><b class="cierna">Cena: <?=$string['cena']?> €</b></label></p>
-                    <input class="uprtr" type="number" placeholder="Cena" name="uprCena" id="uprCena">
+                    <input class="uprtr" type="number" placeholder="Cena" name="uprCena" id="uprCena" min="1">
                     <button type="submit">Zmeniť</button>
                 </form>
 
                 <form method="post">
                     <p><label for="uprPocet"><b class="cierna">Počet kusov: <?=$string['pocet_kusov']?></b></label></p>
-                    <input class="uprtr" type="number" placeholder="Počet kusov" name="uprPocet" id="uprPocet">
+                    <input class="uprtr" type="number" placeholder="Počet kusov" name="uprPocet" id="uprPocet" min="0">
                     <button type="submit">Zmeniť</button>
                 </form>
 
@@ -131,7 +131,7 @@ if(!isset($_SESSION['name'])){
 
                 <form method="post">
                     <p><label for="uprKategoria"><b class="cierna">Kategória: <?=$string['kategoria']?></b></label></p>
-                    <input class="uprtr" type="number" placeholder="Kategória" name="uprKategoria" id="uprKategoria" min="1" max="5">
+                    <input class="uprtr" type="number" placeholder="Kategória" name="uprKategoria" id="uprKategoria" min="1" max="6">
                     <button type="submit">Zmeniť</button>
                 </form>
 

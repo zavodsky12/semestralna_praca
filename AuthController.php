@@ -191,6 +191,8 @@ class AuthController
     }
     public function zmazProdukt($kategoria)
     {
+        $sql = "DELETE FROM hotove_objednavky WHERE id_produktu = '$kategoria'";
+        $this->con->query($sql);
         $sql = "DELETE FROM objednavky WHERE id_produktu = '$kategoria'";
         $this->con->query($sql);
         $sql = "DELETE FROM produkty WHERE id_produktu = '$kategoria'";

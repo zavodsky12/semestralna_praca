@@ -91,7 +91,7 @@ $conn = mysqli_connect("localhost","root","","databaza2");
                     <label for="psw-repeat"><b class="cierna">Zopakujte heslo</b></label>
                     <input class="registr" type="password" placeholder="Zopakujte heslo" name="psw-repeat" id="psw-repeat" required>
                     <hr>
-                    <p class="cierna">Vytvorením účtu súhlasíte s našími podmienkami používania <a class="modre" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Terms & Privacy</a>.</p>
+                    <p class="cierna">Vytvorením účtu súhlasíte s našími podmienkami používania <a class="modre" href="#">Terms & Privacy</a>.</p>
 
                     <?php if(Auth::isLogged()) { ?>
                         <br>
