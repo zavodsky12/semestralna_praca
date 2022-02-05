@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost","root","","databaza2");
+require_once "funkcie/pripojDatabazu.php";
 ?>
 
 <table>

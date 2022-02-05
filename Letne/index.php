@@ -1,4 +1,7 @@
 <?php
+$_SERVER['DOCUMENT_ROOT'] = dirname("../", 2);
+set_include_path("../");
+//chroot("../");
 session_start();
 require "../AuthController.php";
 //require "App.php";
@@ -12,7 +15,6 @@ if(isset($_POST['idcko']))
     $_SESSION['idcko']=$id;
     header("location:../uprava.php");
 }
-$_SERVER['DOCUMENT_ROOT'] = "index.php";
 ?>
 
 

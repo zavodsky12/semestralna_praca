@@ -1,82 +1,29 @@
 <?php
-session_start();
-require "AuthController.php";
-$authctr = new AuthController();
-$conn = mysqli_connect("localhost","root","","databaza2");
-if(!isset($_SESSION['name'])){
-    header("Location:index.php");
-} else {
-    if ($_SESSION['name'] != 'admin@admin') {
-        header("Location:index.php");
-    }
-}
+require_once "funkcie/pripojDatabazu.php";
+require_once "funkcie/presmerujAdmin.php";
 ?>
 
 
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="vlastne.css">
-    <link rel="stylesheet" href="nove.css">
-    <title>Obchod so športovými potrebami</title>
-    <script src="javaskripty.js"></script>
+    <?php
+    require_once "funkcie/pripajanieSuborov.php";
+    ?>
 </head>
 
 <body>
-<div class="header zadnyObrazok">
-    <h1>Bikeski.sk</h1>
-    <h2>Predaj outdorových športových potrieb</h2>
-</div>
+<?php
+require_once "funkcie/hornaCast.php";
+?>
 
 <div class="row">
-    <div class="col-1 col-s-0">
-
-    </div>
-    <div class="col-2 col-s-12 menu">
-        <ul>
-            <li class="hlavne"><a href="index.php">Hlavná stránka</a></li>
-            <li class="hlavne" onclick=dropdownSide("prve")>Letný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne prve"><a href="Letne/Bicykle.php" class="red">Bicykle</a></li>
-            <li class="opacne prve"><a href="Letne/Kolobezky.html" class="red">Kolobežky</a></li>
-            <li class="opacne prve"><a href="Letne/Korcule.html" class="red">Korčule</a></li>
-            <li class="opacne prve"><a href="Letne/Nahradne.html" class="red">Doplnky</a></li>
-            <li class="opacne prve"><a href="Letne/Doplnky.html" class="red">Príslušenstvo</a></li>
-            <li class="hlavne" onclick=dropdownSide("druhe")>Zimný šport<i class="fa fa-caret-down"></i></li>
-            <li class="opacne druhe">Lyže</li>
-            <li class="opacne druhe">Snowboardy</li>
-            <li class="opacne druhe">Korčule</li>
-            <li class="opacne druhe">Bežky</li>
-            <li class="opacne druhe">Príslušenstvo</li>
-            <li class="opacne druhe">Doplnky</li>
-            <li class="hlavne" onclick=dropdownSide("tretie")>Doplnky<i class="fa fa-caret-down"></i></li>
-            <li class="opacne tretie">Cyklodoplnky</li>
-            <li class="opacne tretie">Cyklovýbava</li>
-            <li class="opacne tretie">Lyžiarky</li>
-            <li class="opacne tretie">Viazania</li>
-            <li class="opacne tretie">Palice</li>
-            <li class="opacne tretie">Letné doplnky</li>
-            <li class="opacne tretie">Zimné doplnky</li>
-        </ul>
-        <?php if (isset($_SESSION['name'])) { ?>
-            <br>
-            <ul>
-                <li class="hlavne"><a href="kosik.php">Pozrieť košík</a></li>
-                <li class="hlavne"><a href="mojeObjednavky.php">Pozrieť moje objednávky</a></li>
-                <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                    <li class="hlavne"><a href="pridaj.php">Pridaj produkt</a></li>
-                <?php } ?>
-            </ul>
-        <?php } else { ?>
-            <br>
-            <ul>
-                <li class="hlavne"><a href="prihlasenie.php">Prihlásiť sa</a></li>
-                <li class="hlavne"><a href="registracia.php">Registrovať</a></li>
-            </ul>
-        <?php } ?>
-    </div>
+    <?php
+    require_once "funkcie/lavaStrana.php";
+    ?>
+    <?php
+    require_once "funkcie/menucko.php";
+    ?>
 
     <div class="col-6 col-s-8">
         <div class="main">
@@ -148,25 +95,15 @@ if(!isset($_SESSION['name'])){
     <div class="col-22 col-s-4">
 
     </div>
-    <div class="col-1 col-s-0">
-
-    </div>
+    <?php
+    require_once "funkcie/pravaStrana.php";
+    ?>
 </div>
 
 </div>
 
-<div>
-    <div class="col-3">
-
-    </div>
-    <div class="col-6">
-        <div class="footer">
-            <p>Autor stránky - Daniel Závodský.</p>
-        </div>
-    </div>
-    <div class="col-3">
-
-    </div>
-</div>
+<?php
+require_once "funkcie/spodnaCast.php";
+?>
 </body>
 </html>
