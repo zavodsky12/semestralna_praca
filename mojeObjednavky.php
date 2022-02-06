@@ -5,7 +5,7 @@ require_once "funkcie/presmerujNeprihlaseny.php";
 
 
 <!DOCTYPE html>
-<html>
+<html lang="sk">
 <head>
     <?php
     require_once "funkcie/pripajanieSuborov.php";
@@ -18,9 +18,6 @@ require_once "funkcie/hornaCast.php";
 ?>
 
 <div class="row">
-    <?php
-    require_once "funkcie/lavaStrana.php";
-    ?>
     <?php
     require_once "funkcie/menucko.php";
     ?>
@@ -45,7 +42,7 @@ require_once "funkcie/hornaCast.php";
                 if ($_SESSION['name'] == 'admin@admin') { ?>
                     <?php if (!is_null($string)) { ?>
                         <hr>
-                        <form action="">
+                        <form>
                             <select name="customers" onchange="vypisObjednavkyy(this.value)" class="vyber">
                                 <option value="">Vyberte zo zoznamu</option>
                                 <?php
@@ -61,9 +58,9 @@ require_once "funkcie/hornaCast.php";
                                     $sql = "SELECT * FROM pouzivatelia WHERE id_pouzivatela = '$i'";
                                     $stmt = $conn->query($sql);
                                     $strin = $stmt->fetch_assoc();
-                                    $em = $strin['email'];
-                                    $idp = $strin['id_pouzivatela'];
                                     if (!is_null($strin)) {
+                                        $em = $strin['email'];
+                                        $idp = $strin['id_pouzivatela'];
                                         ?>
                                         <option value="<?=$idp?>"><?=$em?></option>
                                     <?php } ?>
@@ -96,11 +93,11 @@ require_once "funkcie/hornaCast.php";
                         </div>
                     <?php } ?>
                 <?php } else {
-                    $sql = "SELECT id_nakupu as total FROM hotove_objednavky WHERE id_pouzivatela IN(SELECT id_pouzivatela FROM pouzivatelia WHERE email LIKE '$userN')";
-                    $stmt = $conn->query($sql);
-                    $string = $stmt->fetch_assoc();
+                    $stmt = $con->prepare("SELECT id_nakupu as total FROM hotove_objednavky WHERE id_pouzivatela IN(SELECT id_pouzivatela FROM pouzivatelia WHERE email LIKE ?)");
+                    $stmt->execute([$userN]);
+                    $string = $stmt->fetch(PDO::FETCH_ASSOC);
                     ?>
-                    <?php if (!is_null($string)) { ?>
+                    <?php if (!empty($string)) { ?>
                         <hr>
                         <table>
                             <tr>
@@ -112,10 +109,10 @@ require_once "funkcie/hornaCast.php";
                                 <th>Platba</th>
                             </tr>
                             <?php for ($i = $min; $i < $max+1; $i++) {
-                                $sql = "SELECT objednavka_cislo, obrazok, hotove_objednavky.pocet_kusov as pocet_kusov, nazov, cena, dorucenie, platba FROM hotove_objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
-                                $stmt = $conn->query($sql);
-                                $string = $stmt->fetch_assoc();
-                                if (!is_null($string)) { ?>
+                                $stmt = $con->prepare("SELECT objednavka_cislo, obrazok, hotove_objednavky.pocet_kusov as pocet_kusov, nazov, cena, dorucenie, platba FROM hotove_objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE ?");
+                                $stmt->execute([$userN]);
+                                $string = $stmt->fetch(PDO::FETCH_ASSOC);
+                                if (!empty($string)) { ?>
 
                                     <tr>
                                         <td><img src="files/<?=$string['obrazok']?>" alt="Nature" class="objednany-obr"><?=$string['nazov']?></td>
@@ -145,11 +142,6 @@ require_once "funkcie/hornaCast.php";
     <?php
     require_once "funkcie/praveMenuckoB.php";
     ?>
-    <?php
-    require_once "funkcie/pravaStrana.php";
-    ?>
-</div>
-
 </div>
 
 <?php

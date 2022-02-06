@@ -5,7 +5,7 @@ require_once "funkcie/presmerujAdmin.php";
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <?php
     require_once "funkcie/pripajanieSuborov.php";
@@ -18,9 +18,6 @@ require_once "funkcie/hornaCast.php";
 ?>
 
 <div class="row">
-    <?php
-    require_once "funkcie/lavaStrana.php";
-    ?>
     <?php
     require_once "funkcie/menucko.php";
     ?>
@@ -40,10 +37,10 @@ require_once "funkcie/hornaCast.php";
                     <input class="registr" type="text" placeholder="Názov" name="nazov" id="nazov" required>
 
                     <label for="cena"><b class="cierna">Cena</b></label>
-                    <input class="registr" type="number" placeholder="Cena" name="cena" id="cena" required>
+                    <input class="registr" type="number" placeholder="Cena" name="cena" id="cena" min="0" required>
 
                     <label for="pocet_kusov"><b class="cierna">Počet kusov</b></label>
-                    <input class="registr" type="number" placeholder="Počet kusov" name="pocet_kusov" id="pocet_kusov" required>
+                    <input class="registr" type="number" placeholder="Počet kusov" name="pocet_kusov" id="pocet_kusov" min="0" required>
 
                     <label for="popis"><b class="cierna">Popis</b></label>
                     <input class="registr" type="text" placeholder="Popis" name="popis" id="popis" required>

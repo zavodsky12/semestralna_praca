@@ -4,7 +4,7 @@ require_once "funkcie/pripojDatabazu.php";
 
 
 <!DOCTYPE html>
-<html>
+<html lang="sk">
 <head>
     <?php
     require_once "funkcie/pripajanieSuborov.php";
@@ -17,9 +17,6 @@ require_once "funkcie/hornaCast.php";
 ?>
 
 <div class="row">
-    <?php
-    require_once "funkcie/lavaStrana.php";
-    ?>
     <?php
     require_once "funkcie/menucko.php";
     ?>
@@ -64,7 +61,7 @@ require_once "funkcie/hornaCast.php";
                     <form method="post">
                         <label for="vlozDoK"><b class="cierna">Napíšte, koľko výrobkov chcete vložiť do košíka</b></label>
                         <input class="registr" type="number" placeholder="Vložte počet kusov" name="vlozDoK" id="vlozDoK" min="1" max="<?=$string['pocet_kusov']?>" value="1" required>
-                        <input class="registr" type="number" placeholder="Vložte počet kusov" name="end" value="<?=$end?>" style="display: none" required>
+                        <input class="registr" type="hidden" name="end" value="<?=$end?>" required>
                         <button type="submit">Vložiť do košíka</button>
                     </form>
                 <?php } else { ?>
@@ -80,9 +77,6 @@ require_once "funkcie/hornaCast.php";
 
     <?php
     require_once "funkcie/praveMenucko.php";
-    ?>
-    <?php
-    require_once "funkcie/pravaStrana.php";
     ?>
 </div>
 

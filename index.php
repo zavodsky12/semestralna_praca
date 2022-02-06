@@ -5,7 +5,7 @@ require_once "funkcie/presmerujUprava.php";
 
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html lang="sk">
 <head>
     <?php
     require_once "funkcie/pripajanieSuborov.php";
@@ -19,18 +19,17 @@ require_once "funkcie/hornaCast.php";
 
 <div class="row">
     <?php
-    require_once "funkcie/lavaStrana.php";
-    ?>
-    <?php
     require_once "funkcie/menucko.php";
     ?>
 
     <div class="col-6 col-s-8">
         <div class="main" id="hlav">
             <h1>Všetky produkty</h1>
-            <li class="sortovace" onclick=utriedNazov("hlav")>Utrieď podľa názvu</li>
-            <li class="sortovace" onclick=utriedCena("hlav")>Utrieď podľa ceny</li>
-            <li class="sortovace" onclick=utriedPocet("hlav")>Utrieď podľa počtu produktov na sklade</li>
+            <ul style="background-color: #0073e6">
+                <li class="sortovace" onclick="utriedNazov('hlav')">Utrieď podľa názvu</li>
+                <li class="sortovace" onclick="utriedCena('hlav')">Utrieď podľa ceny</li>
+                <li class="sortovace" onclick="utriedPocet('hlav')">Utrieď podľa počtu produktov na sklade</li>
+            </ul>
             <br>
             <input class="cierna vyhladaj" type="text" id="filtrovanie" onkeyup="filterList()" placeholder="Vyhľadaj produkt.." title="Type in a name">
             <?php
@@ -43,30 +42,28 @@ require_once "funkcie/hornaCast.php";
                 if (!is_null($string)) {
                     $pocet++;
                     ?>
-                    <a href="produkt.php?sku=<?=$i?>" class="horne">
-                        <div class="w3-col">
-                            <div class="w3-card-4 w3-margin w3-white">
-                                <?php $obraz = $string['obrazok']; ?>
-                                <img src="files/<?=$obraz?>" alt="Nature" class="produkt-obr">
-                                <div class="w3-container">
-                                    <?php $meno = $string['nazov']; ?>
-                                    <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
-                                    <?php $pocetK = $string['pocet_kusov']; ?>
-                                    <h4>Pocet kusov na sklade: <span class="w3-opacity pocetTr"><?=$pocetK?></span></h4>
-                                    <?php $cena = $string['cena']; ?>
-                                    <h4>Cena: <span class="w3-opacity cenaTr"><?=$cena?> €</span></h4>
-                                    <p><button><b>Pozrieť produkt</b></button></p>
-                                    <?php if (isset($_SESSION['name'])) { ?>
-                                        <?php if ($_SESSION['name'] == 'admin@admin') { ?>
-                                            <form method='post' class="zadnyForm">
-                                                <p><button class="cervena" name="idcko" value='<?=$i?>'><b>Upraviť produkt</b></button></p>
-                                            </form>
-                                        <?php } ?>
+                    <div class="w3-col horne" onclick="window.location.href = 'produkt.php?sku=<?=$i?>';">
+                        <div class="w3-card-4 w3-margin w3-white">
+                            <?php $obraz = $string['obrazok']; ?>
+                            <img src="files/<?=$obraz?>" alt="Nature" class="produkt-obr">
+                            <div class="w3-container">
+                                <?php $meno = $string['nazov']; ?>
+                                <h3 class="rovnaka-vyska"><b><?=$meno?></b></h3>
+                                <?php $pocetK = $string['pocet_kusov']; ?>
+                                <h4>Pocet kusov na sklade: <span class="w3-opacity pocetTr"><?=$pocetK?></span></h4>
+                                <?php $cena = $string['cena']; ?>
+                                <h4>Cena: <span class="w3-opacity cenaTr"><?=$cena?> €</span></h4>
+                                <p><button><b>Pozrieť produkt</b></button></p>
+                                <?php if (isset($_SESSION['name'])) { ?>
+                                    <?php if ($_SESSION['name'] == 'admin@admin') { ?>
+                                        <form method='post' class="zadnyForm">
+                                            <p><button class="cervena" name="idcko" value='<?=$i?>'><b>Upraviť produkt</b></button></p>
+                                        </form>
                                     <?php } ?>
-                                </div>
+                                <?php } ?>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 <?php } ?>
                 <?php if ($pocet == 3) {
                     $pocet = 0;
@@ -85,9 +82,6 @@ require_once "funkcie/hornaCast.php";
 
     <?php
     require_once "funkcie/praveMenucko.php";
-    ?>
-    <?php
-    require_once "funkcie/pravaStrana.php";
     ?>
 </div>
 

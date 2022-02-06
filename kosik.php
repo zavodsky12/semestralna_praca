@@ -7,7 +7,7 @@ if(!isset($_SESSION['name'])){
 
 
 <!DOCTYPE html>
-<html>
+<html lang="sk">
 <head>
     <?php
     require_once "funkcie/pripajanieSuborov.php";
@@ -21,9 +21,6 @@ require_once "funkcie/hornaCast.php";
 
 <div class="row">
     <?php
-    require_once "funkcie/lavaStrana.php";
-    ?>
-    <?php
     require_once "funkcie/menucko.php";
     ?>
 
@@ -33,15 +30,15 @@ require_once "funkcie/hornaCast.php";
             <?php
             require_once "funkcie/selectmaxminNakup.php";
             $userN = $_SESSION['name'];
-            $sql = "SELECT id_nakupu as total FROM objednavky JOIN pouzivatelia USING(id_pouzivatela) WHERE email LIKE '$userN'";
-            $stmt = $conn->query($sql);
-            $string = $stmt->fetch_assoc();
-            if (!is_null($string)) {
+            $stmt = $con->prepare("SELECT id_nakupu as total FROM objednavky JOIN pouzivatelia USING(id_pouzivatela) WHERE email LIKE ?");
+            $stmt->execute([$userN]);
+            $string = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!empty($string)) {
             for ($i = $min; $i < $max+1; $i++) {
-                $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, produkty.pocet_kusov as pocet_kusovv, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
-                $stmt = $conn->query($sql);
-                $string = $stmt->fetch_assoc();
-            if (!is_null($string)) { ?>
+                $stmt = $con->prepare("SELECT objednavky.pocet_kusov as pocet_kusov, produkty.pocet_kusov as pocet_kusovv, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE ?");
+                $stmt->execute([$userN]);
+                $string = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!empty($string)) { ?>
 
                 <div class="container">
                     <hr>
@@ -66,7 +63,7 @@ require_once "funkcie/hornaCast.php";
                     <br>
                     <p><label for="uprMnozstvo<?=$i?>"><b class="cierna">Zvoľte množstvo produktov:</b></label></p>
                     <input class="uprtr" type="number" placeholder="Množstvo" name="uprMnozstvo<?=$i?>" id="uprMnozstvo<?=$i?>" min="1" max="<?=$string['pocet_kusovv']?>" onkeyup="zmenData<?=$i?>()">
-                    <input class="uprtr" type="hidden" placeholder="Množstvo" name="uprMnozstvo<?=$i?>" id="uprMnozstv<?=$i?>" value="<?=$i?>">
+                    <input class="uprtr" type="hidden" name="uprMnozstvo<?=$i?>" id="uprMnozstv<?=$i?>" value="<?=$i?>">
                     <form method='post' style="padding: 0px">
                         <p><button class="cervena" name="zmazKosik" value='<?=$i?>'><b>Odstrániť produkt</b></button></p>
                     </form>
@@ -93,7 +90,7 @@ require_once "funkcie/hornaCast.php";
             <?php } ?>
             <?php } ?>
                 <div class="platba">
-                    <p class="kosikPlatba"><button><a href="platba.php"><b>Prejsť k platbe</b></a></button></p>
+                    <p class="kosikPlatba"><button onclick="window.location.href = 'platba.php';"><b>Prejsť k platbe</b></button></p>
                 </div>
             <?php } else { ?>
                 <div class="container">
@@ -107,9 +104,6 @@ require_once "funkcie/hornaCast.php";
 
     <?php
     require_once "funkcie/praveMenuckoB.php";
-    ?>
-    <?php
-    require_once "funkcie/pravaStrana.php";
     ?>
 </div>
 

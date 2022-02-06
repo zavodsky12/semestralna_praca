@@ -5,7 +5,7 @@ require_once "funkcie/presmerujAdmin.php";
 
 
 <!DOCTYPE html>
-<html>
+<html lang="sk">
 <head>
     <?php
     require_once "funkcie/pripajanieSuborov.php";
@@ -18,9 +18,6 @@ require_once "funkcie/hornaCast.php";
 ?>
 
 <div class="row">
-    <?php
-    require_once "funkcie/lavaStrana.php";
-    ?>
     <?php
     require_once "funkcie/menucko.php";
     ?>
@@ -98,8 +95,6 @@ require_once "funkcie/hornaCast.php";
     <?php
     require_once "funkcie/pravaStrana.php";
     ?>
-</div>
-
 </div>
 
 <?php

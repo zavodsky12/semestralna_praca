@@ -15,9 +15,9 @@
             <?php } ?>
             <form method="post">
                 <label for="controle" class="cierna">Email:</label>
-                <input type="email" name="login">
-                <label for="controle" class="cierna">Heslo:</label>
-                <input type="password" name="password">
+                <input type="email" name="login" id="controle">
+                <label for="controle2" class="cierna">Heslo:</label>
+                <input type="password" name="password" id="controle2">
                 <input type="submit" value="Prihlasit">
             </form>
         </div>

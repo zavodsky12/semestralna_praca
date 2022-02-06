@@ -220,13 +220,18 @@ class AuthController
         $string = $stmt->fetch_assoc();
         $max = (int)$string['total'];
         $meno = $_SESSION['name'];
-        $sql = "SELECT id_pouzivatela FROM pouzivatelia WHERE email = '$meno'";
-        $stmt = $this->conn->query($sql);
-        $string = $stmt->fetch_assoc();
+        $stmt = $this->con->prepare("SELECT id_pouzivatela FROM pouzivatelia WHERE email = ?");
+        $stmt->execute([$meno]);
+        $string = $stmt->fetch(PDO::FETCH_ASSOC);
+//        $sql = "SELECT id_pouzivatela FROM pouzivatelia WHERE email = '$meno'";
+//        $stmt = $this->conn->query($sql);
+//        $string = $stmt->fetch_assoc();
         $user = $string['id_pouzivatela'];
-        $sql = "SELECT * FROM objednavky WHERE id_pouzivatela = '$user'";
-        $stmt = $this->conn->query($sql);
-        while($row = mysqli_fetch_assoc($stmt)){
+//        $sql = "SELECT * FROM objednavky WHERE id_pouzivatela = '$user'";
+//        $stmt = $this->conn->query($sql);
+        $stmt = $this->con->prepare("SELECT * FROM objednavky WHERE id_pouzivatela = ?");
+        $stmt->execute([$user]);
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
             $this->con->prepare("INSERT INTO hotove_objednavky(id_nakupu, id_pouzivatela, id_produktu, objednavka_cislo, pocet_kusov, dorucenie, platba) VALUES (?,?,?,?,?,?,?)")
                 ->execute([$row['id_nakupu'], $row['id_pouzivatela'], $row['id_produktu'], $max + 1, $row['pocet_kusov'], $doprava, $_POST['platba']]);
@@ -235,8 +240,8 @@ class AuthController
             $sql = "UPDATE produkty SET pocet_kusov = pocet_kusov - '$pocet' WHERE id_produktu = '$produkt'";
             $this->con->query($sql);
         }
-        $sql = "DELETE FROM objednavky WHERE id_pouzivatela = '$user'";
-        $this->conn->query($sql);
+        $stmt = $this->con->prepare("DELETE FROM objednavky WHERE id_pouzivatela = ?");
+        $stmt->execute([$user]);
         $_SESSION['objednane'] = 'ano';
     }
 

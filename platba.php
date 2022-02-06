@@ -5,7 +5,7 @@ require_once "funkcie/presmerujNeprihlaseny.php";
 
 
 <!DOCTYPE html>
-<html>
+<html lang="sk">
 <head>
     <?php
     require_once "funkcie/pripajanieSuborov.php";
@@ -19,9 +19,6 @@ require_once "funkcie/hornaCast.php";
 
 <div class="row">
     <?php
-    require_once "funkcie/lavaStrana.php";
-    ?>
-    <?php
     require_once "funkcie/menucko.php";
     ?>
 
@@ -32,10 +29,10 @@ require_once "funkcie/hornaCast.php";
                 <?php
                 require_once "funkcie/selectmaxminNakup.php";
                 $userN = $_SESSION['name'];
-                $sql = "SELECT id_nakupu as total FROM objednavky JOIN pouzivatelia USING(id_pouzivatela) WHERE email LIKE '$userN'";
-                $stmt = $conn->query($sql);
-                $string = $stmt->fetch_assoc();
-                if (!is_null($string)) { ?>
+                $stmt = $con->prepare("SELECT id_nakupu as total FROM objednavky JOIN pouzivatelia USING(id_pouzivatela) WHERE email LIKE ?");
+                $stmt->execute([$userN]);
+                $string = $stmt->fetch(PDO::FETCH_ASSOC);
+                if (!empty($string)) { ?>
                     <hr>
                     <table>
                         <tr>
@@ -44,10 +41,10 @@ require_once "funkcie/hornaCast.php";
                             <th>Celková cena</th>
                         </tr>
                         <?php for ($i = $min; $i < $max+1; $i++) {
-                            $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
-                            $stmt = $conn->query($sql);
-                            $string = $stmt->fetch_assoc();
-                            if (!is_null($string)) { ?>
+                            $stmt = $con->prepare("SELECT objednavky.pocet_kusov as pocet_kusov, obrazok, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE ?");
+                            $stmt->execute([$userN]);
+                            $string = $stmt->fetch(PDO::FETCH_ASSOC);
+                            if (!empty($string)) { ?>
 
                                 <tr>
                                     <td><?=$string['nazov']?></td>
@@ -66,13 +63,13 @@ require_once "funkcie/hornaCast.php";
                             <p><b class="cierna">Zvoľte spôsob dopravy</b></p>
                             <input type="radio" name="doprava" id="doprava" value="osobny odber">
                             <label for="doprava" class="cierna">Osobný odber</label><br>
-                            <input type="radio" name="doprava" id="doprava" value="zasielka">
-                            <label for="doprava" class="cierna">Doručenie zásielkou</label>
+                            <input type="radio" name="doprava" id="doprava2" value="zasielka">
+                            <label for="doprava2" class="cierna">Doručenie zásielkou</label>
                             <p><b class="cierna">Zvoľte spôsob platby</b></p>
                             <input type="radio" name="platba" id="platba" value="hotovost">
                             <label for="platba" class="cierna">Platba v hotovosti</label><br>
-                            <input type="radio" name="platba" id="platba" value="prevod">
-                            <label for="platba" class="cierna">Platba prevodom</label>
+                            <input type="radio" name="platba" id="platba2" value="prevod">
+                            <label for="platba2" class="cierna">Platba prevodom</label>
                             <p><button type="submit"><b>Objednať</b></button></p>
                         </form>
                     </div>
@@ -97,11 +94,6 @@ require_once "funkcie/hornaCast.php";
     <?php
     require_once "funkcie/praveMenuckoB.php";
     ?>
-    <?php
-    require_once "funkcie/pravaStrana.php";
-    ?>
-</div>
-
 </div>
 
 <?php

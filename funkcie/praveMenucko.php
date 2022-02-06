@@ -15,9 +15,9 @@
             <?php } ?>
             <form method="post">
                 <label for="controle" class="cierna">Email:</label>
-                <input type="email" name="login">
-                <label for="controle" class="cierna">Heslo:</label>
-                <input type="password" name="password">
+                <input type="email" name="login" id="controle">
+                <label for="controle2" class="cierna">Heslo:</label>
+                <input type="password" name="password" id="controle2">
                 <input type="submit" value="Prihlásiť">
             </form>
         </div>
@@ -30,10 +30,10 @@
             require_once "selectmaxminNakup.php";
             $userN = $_SESSION['name'];
             for ($i = $min; $i < $max+1; $i++) {
-                $sql = "SELECT objednavky.pocet_kusov as pocet_kusov, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE '$userN'";
-                $stmt = $conn->query($sql);
-                $string = $stmt->fetch_assoc();
-                if (!is_null($string)) { ?>
+                $stmt = $con->prepare("SELECT objednavky.pocet_kusov as pocet_kusov, nazov, cena FROM objednavky JOIN produkty USING(id_produktu) JOIN pouzivatelia USING(id_pouzivatela) WHERE id_nakupu = '$i' AND email LIKE ?");
+                $stmt->execute([$userN]);
+                $string = $stmt->fetch(PDO::FETCH_ASSOC);
+                if (!empty($string)) { ?>
                     <div class="right">
                         <p class="cierna"><b>Názov:</b> <?=$string['nazov']?></p>
                         <p class="cierna"><b>Počet kusov:</b> <?=$string['pocet_kusov']?></p>
@@ -42,15 +42,18 @@
                     <br>
                 <?php } ?>
             <?php } ?>
-            <button><b><a href="kosik.php">Pozrieť košík</a></b></button>
+            <button onclick="window.location.href = 'kosik.php';"><b>Pozrieť košík</b></button>
         </div>
     <?php } else { ?>
         <div class="registracia">
             <h2>Registrácia</h2>
             <div class="right">
                 <p class="normalne">Ak ešte u nás nemáte konto, zaregistrujte sa</p>
-                <button><b><a href="registracia.php">Registrovať</a></b></button>
+                <button onclick="window.location.href = 'registracia.php';"><b>Registrovať</b></button>
             </div>
         </div>
     <?php } ?>
+</div>
+<div class="col-1 col-s-0">
+
 </div>
