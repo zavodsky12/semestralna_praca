@@ -117,7 +117,7 @@ class AuthController
         $dlzka2 = strlen($passwd);
         $hash = password_hash($passwd, PASSWORD_DEFAULT);
         if ($dlzka > 2 && $dlzka < 255 && $dlzka2 > 2 && $dlzka2 < 255) {
-            $stmt = $this->con->prepare("SELECT meno FROM pouzivatelia WHERE meno = ?");
+            $stmt = $this->con->prepare("SELECT email FROM pouzivatelia WHERE email = ?");
             $stmt->execute([$name]);
             $posts = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_PROPS_LATE);
             if (empty($posts)) {

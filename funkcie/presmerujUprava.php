@@ -3,6 +3,6 @@ if(isset($_POST['idcko']))
 {
     $id=$_POST['idcko'];
     $_SESSION['idcko']=$id;
-    header("location:uprava.php");
+    header("location:/semestralka/uprava.php");
 }
 ?>

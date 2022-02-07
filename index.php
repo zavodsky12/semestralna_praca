@@ -42,7 +42,7 @@ require_once "funkcie/hornaCast.php";
                 if (!is_null($string)) {
                     $pocet++;
                     ?>
-                    <div class="w3-col horne" onclick="window.location.href = 'produkt.php?sku=<?=$i?>';">
+                    <div class="w3-col horne" onclick="window.location.href = '/semestralka/produkt.php?sku=<?=$i?>';">
                         <div class="w3-card-4 w3-margin w3-white">
                             <?php $obraz = $string['obrazok']; ?>
                             <img src="files/<?=$obraz?>" alt="Nature" class="produkt-obr">

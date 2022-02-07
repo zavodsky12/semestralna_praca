@@ -42,14 +42,14 @@
                     <br>
                 <?php } ?>
             <?php } ?>
-            <button onclick="window.location.href = 'kosik.php';"><b>Pozrieť košík</b></button>
+            <button onclick="window.location.href = '/semestralka/kosik.php';"><b>Pozrieť košík</b></button>
         </div>
     <?php } else { ?>
         <div class="registracia">
             <h2>Registrácia</h2>
             <div class="right">
                 <p class="normalne">Ak ešte u nás nemáte konto, zaregistrujte sa</p>
-                <button onclick="window.location.href = 'registracia.php';"><b>Registrovať</b></button>
+                <button onclick="window.location.href = '/semestralka/registracia.php';"><b>Registrovať</b></button>
             </div>
         </div>
     <?php } ?>

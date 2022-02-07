@@ -61,7 +61,7 @@ require_once "funkcie/hornaCast.php";
                     <form method="post">
                         <label for="vlozDoK"><b class="cierna">Napíšte, koľko výrobkov chcete vložiť do košíka</b></label>
                         <input class="registr" type="number" placeholder="Vložte počet kusov" name="vlozDoK" id="vlozDoK" min="1" max="<?=$string['pocet_kusov']?>" value="1" required>
-                        <input class="registr" type="hidden" name="end" value="<?=$end?>" required>
+                        <input class="registr" type="hidden" name="end" value="<?=$end?>">
                         <button type="submit">Vložiť do košíka</button>
                     </form>
                 <?php } else { ?>

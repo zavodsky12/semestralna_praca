@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "AuthController.php";
+require "/xampp/htdocs/semestralka/AuthController.php";
 $authctr = new AuthController();
 $conn = mysqli_connect("localhost","root","","databaza2");
 try {
